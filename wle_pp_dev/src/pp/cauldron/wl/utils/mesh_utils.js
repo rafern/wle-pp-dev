@@ -1,6 +1,7 @@
 import { MeshAttribute, MeshIndexType } from "@wonderlandengine/api";
 import { vec2_create, vec3_create, vec4_create } from "../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../pp/globals.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class MeshCreationVertexParams {
 
@@ -38,7 +39,7 @@ export function create(meshCreationParams) {
     }
 
     let indexDataUnsignedInt = new Uint32Array(indexData.length);
-    indexDataUnsignedInt.pp_copy(indexData);
+    ArrayUtils.copy(indexData, indexDataUnsignedInt);
 
     let vertexCount = meshCreationParams.myVertexes.length;
     let mesh = meshCreationParams.myEngine.meshes.create({

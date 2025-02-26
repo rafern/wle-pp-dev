@@ -1,3 +1,4 @@
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 import { PhysicsLayerFlags } from "../../../../../../cauldron/physics/physics_layer_flags.js";
 import { RaycastBlockColliderType, RaycastHit } from "../../../../../../cauldron/physics/physics_raycast_params.js";
 import { quat_create, vec3_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
@@ -477,11 +478,11 @@ export class CollisionCheckParams {
         this.mySlidingAdjustSign90Degrees = other.mySlidingAdjustSign90Degrees;
 
         this.myHorizontalBlockLayerFlags.copy(other.myHorizontalBlockLayerFlags);
-        this.myHorizontalObjectsToIgnore.pp_copy(other.myHorizontalObjectsToIgnore);
+        ArrayUtils.copy(other.myHorizontalObjectsToIgnore, this.myHorizontalObjectsToIgnore);
         this.myHorizontalBlockColliderType = other.myHorizontalBlockColliderType;
 
         this.myVerticalBlockLayerFlags.copy(other.myVerticalBlockLayerFlags);
-        this.myVerticalObjectsToIgnore.pp_copy(other.myVerticalObjectsToIgnore);
+        ArrayUtils.copy(other.myVerticalObjectsToIgnore, this.myVerticalObjectsToIgnore);
         this.myVerticalBlockColliderType = other.myVerticalBlockColliderType;
 
         this.myExtraMovementCheckCallback = other.myExtraMovementCheckCallback;

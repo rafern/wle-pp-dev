@@ -4,6 +4,7 @@ import { Globals } from "../../../../pp/globals.js";
 import { EasyTuneBaseWidget } from "../base/easy_tune_base_widget.js";
 import { EasyTuneNumberArrayWidgetConfig } from "./easy_tune_number_array_widget_config.js";
 import { EasyTuneNumberArrayWidgetUI } from "./easy_tune_number_array_widget_ui.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
 
@@ -59,7 +60,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
                 this._myValueRealValue = 0;
             }
 
-            this._myTempValue.pp_copy(this._getVariableValue());
+            ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
 
             this._myStepMultiplierValue = 0;
             this._myStepFastEdit = false;
@@ -109,7 +110,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
 
                 let decimalPlacesMultiplier = Math.pow(10, this._myVariable._myDecimalPlaces);
 
-                this._myTempValue.pp_copy(this._getVariableValue());
+                ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
 
                 if (!this._myNonArray && this._myVariable._myEditAllValuesTogether) {
                     let newValue = Math.round(this._myValueRealValue * decimalPlacesMultiplier + Number.EPSILON) / decimalPlacesMultiplier;
@@ -297,7 +298,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
 
     _resetValue(index) {
         if (this._isActive()) {
-            this._myTempValue.pp_copy(this._getVariableValue());
+            ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
             this._myTempValue[index] = this._getVariableDefaultValue()[index];
             this._setVariableValue(this._myTempValue);
 

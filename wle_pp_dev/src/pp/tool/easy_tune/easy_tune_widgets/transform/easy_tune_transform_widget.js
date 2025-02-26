@@ -5,6 +5,7 @@ import { Globals } from "../../../../pp/globals.js";
 import { EasyTuneBaseWidget } from "../base/easy_tune_base_widget.js";
 import { EasyTuneTransformWidgetConfig } from "./easy_tune_transform_widget_config.js";
 import { EasyTuneTransformWidgetUI } from "./easy_tune_transform_widget_ui.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class EasyTuneTransformWidget extends EasyTuneBaseWidget {
 
@@ -79,9 +80,9 @@ export class EasyTuneTransformWidget extends EasyTuneBaseWidget {
                 }
             }
 
-            this._myTempPositionValue.pp_copy(this._myVariable._myPosition);
-            this._myTempRotationValue.pp_copy(this._myVariable._myRotation);
-            this._myTempScaleValue.pp_copy(this._myVariable._myScale);
+            ArrayUtils.copy(this._myVariable._myPosition, this._myTempPositionValue);
+            ArrayUtils.copy(this._myVariable._myRotation, this._myTempRotationValue);
+            ArrayUtils.copy(this._myVariable._myScale, this._myTempScaleValue);
 
             this._myStepMultiplierValue = 0;
             this._myStepFastEdit = false;
@@ -117,9 +118,9 @@ export class EasyTuneTransformWidget extends EasyTuneBaseWidget {
 
         if (this._myValueEditIndex >= 0 && this._myValueEditIndex < 3) {
             if (valueIntensity != 0) {
-                this._myTempPositionValue.pp_copy(this._myVariable._myPosition);
-                this._myTempRotationValue.pp_copy(this._myVariable._myRotation);
-                this._myTempScaleValue.pp_copy(this._myVariable._myScale);
+                ArrayUtils.copy(this._myVariable._myPosition, this._myTempPositionValue);
+                ArrayUtils.copy(this._myVariable._myRotation, this._myTempRotationValue);
+                ArrayUtils.copy(this._myVariable._myScale, this._myTempScaleValue);
 
                 let amountToAdd = valueIntensity * this._myComponentStepValue * dt;
 
@@ -507,9 +508,9 @@ export class EasyTuneTransformWidget extends EasyTuneBaseWidget {
 
     _resetValue(componentIndex, index) {
         if (this._isActive()) {
-            this._myTempPositionValue.pp_copy(this._myVariable._myPosition);
-            this._myTempRotationValue.pp_copy(this._myVariable._myRotation);
-            this._myTempScaleValue.pp_copy(this._myVariable._myScale);
+            ArrayUtils.copy(this._myVariable._myPosition, this._myTempPositionValue);
+            ArrayUtils.copy(this._myVariable._myRotation, this._myTempRotationValue);
+            ArrayUtils.copy(this._myVariable._myScale, this._myTempScaleValue);
 
             switch (componentIndex) {
                 case 0:

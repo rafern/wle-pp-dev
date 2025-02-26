@@ -1,3 +1,4 @@
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 import { quat_create, vec3_create } from "../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../pp/globals.js";
 import { CharacterCollisionCheckType, CharacterCollisionResults } from "./character_collision_results.js";
@@ -420,8 +421,8 @@ export let convertCharacterColliderSetupToCollisionCheckParams = function () {
 
         outCollisionCheckParams.myHorizontalBlockLayerFlags.copy(characterColliderSetup.myHorizontalCheckParams.myHorizontalCheckBlockLayerFlags);
         outCollisionCheckParams.myVerticalBlockLayerFlags.copy(characterColliderSetup.myVerticalCheckParams.myVerticalCheckBlockLayerFlags);
-        outCollisionCheckParams.myHorizontalObjectsToIgnore.pp_copy(characterColliderSetup.myHorizontalCheckParams.myHorizontalCheckObjectsToIgnore);
-        outCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(characterColliderSetup.myVerticalCheckParams.myVerticalCheckObjectsToIgnore);
+        ArrayUtils.copy(characterColliderSetup.myHorizontalCheckParams.myHorizontalCheckObjectsToIgnore, outCollisionCheckParams.myHorizontalObjectsToIgnore);
+        ArrayUtils.copy(characterColliderSetup.myVerticalCheckParams.myVerticalCheckObjectsToIgnore, outCollisionCheckParams.myVerticalObjectsToIgnore);
         outCollisionCheckParams.myHorizontalBlockColliderType = characterColliderSetup.myHorizontalCheckParams.myHorizontalBlockColliderType;
         outCollisionCheckParams.myVerticalBlockColliderType = characterColliderSetup.myVerticalCheckParams.myVerticalBlockColliderType;
 

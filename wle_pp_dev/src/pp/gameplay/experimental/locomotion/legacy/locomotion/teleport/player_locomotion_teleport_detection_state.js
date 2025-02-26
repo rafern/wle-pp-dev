@@ -12,6 +12,7 @@ import { PlayerTransformManagerSyncFlag } from "../player_transform_manager.js";
 import { PlayerLocomotionTeleportDetectionVisualizer } from "./player_locomotion_teleport_detection_visualizer.js";
 import { PlayerLocomotionTeleportParable } from "./player_locomotion_teleport_parable.js";
 import { PlayerLocomotionTeleportState } from "./player_locomotion_teleport_state.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 let PlayerLocomotionTeleportDetectionTeleportHitValidResult = {
     VALID: 0,
@@ -386,7 +387,7 @@ PlayerLocomotionTeleportDetectionState.prototype._detectTeleportPositionParable 
         raycastParams.myBlockColliderType = this._myTeleportParams.myDetectionParams.myTeleportBlockColliderType;
         raycastParams.myPhysics = Globals.getPhysics(this._myTeleportParams.myEngine);
 
-        raycastParams.myObjectsToIgnore.pp_copy(teleportCollisionCheckParams.myHorizontalObjectsToIgnore);
+        ArrayUtils.copy(teleportCollisionCheckParams.myHorizontalObjectsToIgnore, raycastParams.myObjectsToIgnore);
         for (let objectToIgnore of teleportCollisionCheckParams.myVerticalObjectsToIgnore) {
             raycastParams.myObjectsToIgnore.pp_pushUnique(objectToIgnore, objectsEqualCallback);
         }
@@ -874,7 +875,7 @@ PlayerLocomotionTeleportDetectionState.prototype._isPositionVisible = function (
             raycastParams.myBlockLayerFlags.setMask(this._myTeleportParams.myDetectionParams.myVisibilityBlockLayerFlags.getMask());
             raycastParams.myBlockColliderType = this._myTeleportParams.myDetectionParams.myVisibilityBlockColliderType;
 
-            raycastParams.myObjectsToIgnore.pp_copy(teleportCollisionCheckParams.myHorizontalObjectsToIgnore);
+            ArrayUtils.copy(teleportCollisionCheckParams.myHorizontalObjectsToIgnore, raycastParams.myObjectsToIgnore);
             for (let objectToIgnore of teleportCollisionCheckParams.myVerticalObjectsToIgnore) {
                 raycastParams.myObjectsToIgnore.pp_pushUnique(objectToIgnore, objectsEqualCallback);
             }

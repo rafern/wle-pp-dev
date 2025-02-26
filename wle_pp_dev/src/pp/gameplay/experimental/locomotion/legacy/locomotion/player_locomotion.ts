@@ -21,6 +21,7 @@ import { PlayerObscureManager, PlayerObscureManagerParams } from "./player_obscu
 import { PlayerTransformManager, PlayerTransformManagerParams, PlayerTransformManagerSyncFlag } from "./player_transform_manager.js";
 import { PlayerLocomotionTeleport, PlayerLocomotionTeleportParams } from "./teleport/player_locomotion_teleport.js";
 import { PlayerLocomotionTeleportTeleportType } from "./teleport/player_locomotion_teleport_teleport_state.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export enum PlayerLocomotionDirectionReferenceType {
     HEAD = 0,
@@ -380,7 +381,7 @@ export class PlayerLocomotion {
             params.mySyncHeightFlagMap.set(PlayerTransformManagerSyncFlag.HEIGHT_COLLIDING, true);
 
             params.myHeadCollisionBlockLayerFlags.copy(this._myParams.myViewOcclusionLayerFlags);
-            params.myHeadCollisionObjectsToIgnore.pp_copy(params.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore as any);
+            ArrayUtils.copy(params.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore as any, params.myHeadCollisionObjectsToIgnore);
             const objectsEqualCallback = (first: Readonly<Object3D>, second: Readonly<Object3D>): boolean => first == second;
             for (const objectToIgnore of params.myMovementCollisionCheckParams.myVerticalObjectsToIgnore) {
                 params.myHeadCollisionObjectsToIgnore.pp_pushUnique(objectToIgnore, objectsEqualCallback);
@@ -918,7 +919,7 @@ export class PlayerLocomotion {
             simplifiedParams.myHorizontalCheckObjectsToIgnore.pp_pushUnique(physXComponent.object, (first, second) => first == second);
         }
         simplifiedParams.myVerticalCheckBlockLayerFlags.copy(simplifiedParams.myHorizontalCheckBlockLayerFlags);
-        simplifiedParams.myVerticalCheckObjectsToIgnore.pp_copy(simplifiedParams.myHorizontalCheckObjectsToIgnore);
+        ArrayUtils.copy(simplifiedParams.myHorizontalCheckObjectsToIgnore, simplifiedParams.myVerticalCheckObjectsToIgnore);
 
         simplifiedParams.myHorizontalCheckDebugEnabled = this._myParams.myDebugHorizontalEnabled;
         simplifiedParams.myVerticalCheckDebugEnabled = this._myParams.myDebugVerticalEnabled;

@@ -3,6 +3,7 @@ import { vec3_create } from "../../plugin/js/extensions/array/vec_create_extensi
 import { Globals } from "../../pp/globals.js";
 import { Vector3 } from "../type_definitions/array_type_definitions.js";
 import { PhysicsLayerFlags } from "./physics_layer_flags.js";
+import { ArrayUtils } from "../utils/array/array_utils.js";
 
 export enum RaycastBlockColliderType {
     NORMAL,
@@ -35,7 +36,7 @@ export class RaycastParams {
 
         this.myBlockLayerFlags.copy(other.myBlockLayerFlags);
 
-        this.myObjectsToIgnore.pp_copy(other.myObjectsToIgnore);
+        ArrayUtils.copy(other.myObjectsToIgnore, this.myObjectsToIgnore);
         this.myIgnoreHitsInsideCollision = other.myIgnoreHitsInsideCollision;
 
         (this.myPhysics as Readonly<Physics>) = other.myPhysics;
@@ -200,7 +201,7 @@ export class RaycastResults {
         }
 
         const copyHitCallback = RaycastResults._copySV.copyHitCallback;
-        this.myHits.pp_copy(other.myHits, copyHitCallback);
+        ArrayUtils.copy(other.myHits, this.myHits, copyHitCallback);
     }
 
     public reset(): void {

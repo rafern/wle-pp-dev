@@ -19,6 +19,7 @@ import { MathUtils } from "../../cauldron/utils/math_utils.js";
 import { mat4_create, vec3_create } from "../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/globals.js";
 import { EasyTuneUtils } from "./easy_tune_utils.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export enum EasyTuneVariableType {
     NONE = 0,
@@ -277,7 +278,7 @@ export abstract class EasyTuneVariableArray<ArrayType extends ArrayLike<ArrayEle
         if (this._myValue == null) {
             this._myValue = value.pp_clone();
         } else {
-            this._myValue.pp_copy(value);
+            ArrayUtils.copy(value, this._myValue);
         }
 
         if (resetDefaultValue) {
@@ -297,7 +298,7 @@ export abstract class EasyTuneVariableArray<ArrayType extends ArrayLike<ArrayEle
         if (this._myDefaultValue == null) {
             this._myDefaultValue = value.pp_clone();
         } else {
-            this._myDefaultValue.pp_copy(value);
+            ArrayUtils.copy(value, this._myDefaultValue);
         }
 
         return this;

@@ -11,6 +11,7 @@ import { CollisionCheckParams, CollisionRuntimeParams } from "../../../character
 import { PlayerHeadManager } from "./player_head_manager.js";
 import { PlayerLocomotionTeleport } from "./teleport/player_locomotion_teleport.js";
 import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export enum PlayerTransformManagerSyncFlag {
     BODY_COLLIDING = 0,
@@ -1120,10 +1121,10 @@ export class PlayerTransformManager {
         params.myFeetRadius = params.myRadius;
 
         params.myHorizontalBlockLayerFlags.copy(this._myParams.myHeadCollisionBlockLayerFlags);
-        params.myHorizontalObjectsToIgnore.pp_copy(this._myParams.myHeadCollisionObjectsToIgnore);
+        ArrayUtils.copy(this._myParams.myHeadCollisionObjectsToIgnore, params.myHorizontalObjectsToIgnore);
         params.myHorizontalBlockColliderType = this._myParams.myHeadCollisionBlockColliderType;
         params.myVerticalBlockLayerFlags.copy(this._myParams.myHeadCollisionBlockLayerFlags);
-        params.myVerticalObjectsToIgnore.pp_copy(this._myParams.myHeadCollisionObjectsToIgnore);
+        ArrayUtils.copy(this._myParams.myHeadCollisionObjectsToIgnore, params.myVerticalObjectsToIgnore);
         params.myVerticalBlockColliderType = this._myParams.myHeadCollisionBlockColliderType;
 
         params.mySlidingEnabled = false;

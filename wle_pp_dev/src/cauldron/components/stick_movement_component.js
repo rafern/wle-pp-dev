@@ -9,7 +9,7 @@ import { CollisionCheckParams, CollisionRuntimeParams } from "../../pp/gameplay/
 import { GamepadAxesID, GamepadButtonID } from "../../pp/input/gamepad/gamepad_buttons.js";
 import { vec3_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/pp/globals.js";
-import { MathUtils } from "wle-pp";
+import { ArrayUtils, MathUtils } from "wle-pp";
 
 export class StickMovementComponent extends Component {
     static TypeName = "stick-movement";
@@ -259,7 +259,7 @@ export class StickMovementComponent extends Component {
         }
 
         this._myCollisionCheckParams.myVerticalBlockLayerFlags.copy(this._myCollisionCheckParams.myHorizontalBlockLayerFlags);
-        this._myCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(this._myCollisionCheckParams.myHorizontalObjectsToIgnore);
+        ArrayUtils.copy(this._myCollisionCheckParams.myHorizontalObjectsToIgnore, this._myCollisionCheckParams.myVerticalObjectsToIgnore);
 
         this._myCollisionCheckParams.myHorizontalPositionCheckEnabled = true;
         this._myCollisionCheckParams.myVerticalMovementCheckEnabled = true;

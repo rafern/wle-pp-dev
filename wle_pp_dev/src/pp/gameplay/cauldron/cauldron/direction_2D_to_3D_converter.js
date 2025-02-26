@@ -1,5 +1,6 @@
 import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { quat_create, vec3_create } from "../../../plugin/js/extensions/array/vec_create_extension.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class Direction2DTo3DConverterParams {
 
@@ -253,7 +254,7 @@ Direction2DTo3DConverter.prototype.convertRotationQuat = function () {
                     if (this._myParams.myAdjustForwardWhenCloseToUp && !this._myLastValidFlatForward.vec3_isZero(Math.PP_EPSILON) &&
                         (forward.vec3_angle(direction3DUp) < this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold ||
                             forward.vec3_angle(direction3DUpNegate) < this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold)) {
-                        forward.pp_copy(this._myLastValidFlatForward);
+                        ArrayUtils.copy(this._myLastValidFlatForward, forward);
                     } else if (upsideDown && this._myParams.myInvertForwardWhenUpsideDown) {
                         forward.vec3_negate(forward);
                     }
@@ -264,7 +265,7 @@ Direction2DTo3DConverter.prototype.convertRotationQuat = function () {
 
                     if (forward.vec3_isZero(Math.PP_EPSILON)) {
                         if (!this._myLastValidFlatForward.vec3_isZero(Math.PP_EPSILON)) {
-                            forward.pp_copy(this._myLastValidFlatForward);
+                            ArrayUtils.copy(this._myLastValidFlatForward, forward);
                         } else {
                             forward.vec3_set(0, 0, 1);
                         }
@@ -276,7 +277,7 @@ Direction2DTo3DConverter.prototype.convertRotationQuat = function () {
                     if (this._myParams.myAdjustRightWhenCloseToUp && !this._myLastValidFlatRight.vec3_isZero(Math.PP_EPSILON) &&
                         (right.vec3_angle(direction3DUp) < this._myParams.myAdjustRightWhenCloseToUpAngleThreshold ||
                             right.vec3_angle(direction3DUpNegate) < this._myParams.myAdjustRightWhenCloseToUpAngleThreshold)) {
-                        right.pp_copy(this._myLastValidFlatRight);
+                        ArrayUtils.copy(this._myLastValidFlatRight, right);
                     } else if (upsideDown && this._myParams.myInvertRightWhenUpsideDown) {
                         right.vec3_negate(right);
                     }
@@ -286,7 +287,7 @@ Direction2DTo3DConverter.prototype.convertRotationQuat = function () {
 
                     if (right.vec3_isZero(Math.PP_EPSILON)) {
                         if (!this._myLastValidFlatRight.vec3_isZero(Math.PP_EPSILON)) {
-                            right.pp_copy(this._myLastValidFlatRight);
+                            ArrayUtils.copy(this._myLastValidFlatRight, right);
                         } else {
                             right.vec3_set(-1, 0, 0);
                         }

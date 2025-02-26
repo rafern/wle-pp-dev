@@ -1,6 +1,7 @@
 import { Object3D } from "@wonderlandengine/api";
 import { PhysicsLayerFlags } from "../../../../cauldron/physics/physics_layer_flags.js";
 import { CharacterColliderSetup, CharacterColliderSlideFlickerPreventionMode } from "./character_collider_setup.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export enum CharacterColliderSetupSimplifiedCreationAccuracyLevel {
     VERY_LOW = 0,
@@ -139,10 +140,10 @@ export function createSimplified(simplifiedCreationParams: Readonly<CharacterCol
 
 
     outCharacterColliderSetup.myHorizontalCheckParams.myHorizontalCheckBlockLayerFlags.copy(simplifiedCreationParams.myHorizontalCheckBlockLayerFlags);
-    outCharacterColliderSetup.myHorizontalCheckParams.myHorizontalCheckObjectsToIgnore.pp_copy(simplifiedCreationParams.myHorizontalCheckObjectsToIgnore);
+    ArrayUtils.copy(simplifiedCreationParams.myHorizontalCheckObjectsToIgnore, outCharacterColliderSetup.myHorizontalCheckParams.myHorizontalCheckObjectsToIgnore);
 
     outCharacterColliderSetup.myVerticalCheckParams.myVerticalCheckBlockLayerFlags.copy(simplifiedCreationParams.myVerticalCheckBlockLayerFlags);
-    outCharacterColliderSetup.myVerticalCheckParams.myVerticalCheckObjectsToIgnore.pp_copy(simplifiedCreationParams.myVerticalCheckObjectsToIgnore);
+    ArrayUtils.copy(simplifiedCreationParams.myVerticalCheckObjectsToIgnore, outCharacterColliderSetup.myVerticalCheckParams.myVerticalCheckObjectsToIgnore);
 
 
 

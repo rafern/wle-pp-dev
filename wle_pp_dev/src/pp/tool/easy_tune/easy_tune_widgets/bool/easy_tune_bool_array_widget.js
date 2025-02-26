@@ -1,3 +1,4 @@
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 import { GamepadAxesID } from "../../../../input/gamepad/gamepad_buttons.js";
 import { Globals } from "../../../../pp/globals.js";
 import { EasyTuneBaseWidget } from "../base/easy_tune_base_widget.js";
@@ -40,7 +41,7 @@ export class EasyTuneBoolArrayWidget extends EasyTuneBaseWidget {
 
     _setEasyTuneVariableHook() {
         if (this._myVariable != null) {
-            this._myTempValue.pp_copy(this._getVariableValue());
+            ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
         }
     }
 
@@ -68,7 +69,7 @@ export class EasyTuneBoolArrayWidget extends EasyTuneBaseWidget {
 
         if (this._myValueEditIndex >= 0 && this._myValueEditIndex < this._getVariableValue().length) {
             if (Math.abs(valueIntensity) > this._myConfig.myThumbstickToggleThreshold) {
-                this._myTempValue.pp_copy(this._getVariableValue());
+                ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
                 this._myTempValue[this._myValueEditIndex] = valueIntensity > 0;
                 this._setVariableValue(this._myTempValue);
                 this._refreshUI();
@@ -139,7 +140,7 @@ export class EasyTuneBoolArrayWidget extends EasyTuneBaseWidget {
 
     _resetValue(index) {
         if (this._isActive()) {
-            this._myTempValue.pp_copy(this._getVariableValue());
+            ArrayUtils.copy(this._getVariableValue(), this._myTempValue);
             this._myTempValue[index] = this._getVariableDefaultValue()[index];
             this._setVariableValue(this._myTempValue);
 

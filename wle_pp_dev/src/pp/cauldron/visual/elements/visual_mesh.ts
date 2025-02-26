@@ -4,6 +4,7 @@ import { mat4_create } from "../../../plugin/js/extensions/array/vec_create_exte
 import { Globals } from "../../../pp/globals.js";
 import { AbstractVisualElement, AbstractVisualElementParams } from "./visual_element.js";
 import { VisualElementDefaultType } from "./visual_element_types.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class VisualMeshParams extends AbstractVisualElementParams<VisualMeshParams> {
 
@@ -21,7 +22,7 @@ export class VisualMeshParams extends AbstractVisualElementParams<VisualMeshPara
 
 
     protected _copyHook(other: Readonly<VisualMeshParams>, deepCopy: boolean): void {
-        this.myTransform.pp_copy(other.myTransform);
+        ArrayUtils.copy(other.myTransform, this.myTransform);
 
         if (other.myMesh != null) {
             this.myMesh = other.myMesh;

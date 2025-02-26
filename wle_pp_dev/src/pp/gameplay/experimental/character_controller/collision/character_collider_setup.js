@@ -1,3 +1,4 @@
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 import { PhysicsLayerFlags } from "../../../../cauldron/physics/physics_layer_flags.js";
 import { RaycastBlockColliderType } from "../../../../cauldron/physics/physics_raycast_params.js";
 import { quat_create, vec3_create } from "../../../../plugin/js/extensions/array/vec_create_extension.js";
@@ -458,7 +459,7 @@ CharacterColliderHorizontalCheckParams.prototype.copy = function copy(other) {
     this.myHorizontalPositionVerticalCheckDirection = other.myHorizontalPositionVerticalCheckDirection;
 
     this.myHorizontalCheckBlockLayerFlags.setMask(other.myHorizontalCheckBlockLayerFlags.getMask());
-    this.myHorizontalCheckObjectsToIgnore.pp_copy(other.myHorizontalCheckObjectsToIgnore);
+    ArrayUtils.copy(other.myHorizontalCheckObjectsToIgnore, this.myHorizontalCheckObjectsToIgnore);
     this.myHorizontalBlockColliderType = other.myHorizontalBlockColliderType;
 };
 
@@ -483,7 +484,7 @@ CharacterColliderVerticalCheckParams.prototype.copy = function copy(other) {
     this.myVerticalCheckAllowHitsInsideCollisionIfOneValid = other.myVerticalCheckAllowHitsInsideCollisionIfOneValid;
 
     this.myVerticalCheckBlockLayerFlags.setMask(other.myVerticalCheckBlockLayerFlags.getMask());
-    this.myVerticalCheckObjectsToIgnore.pp_copy(other.myVerticalCheckObjectsToIgnore);
+    ArrayUtils.copy(other.myVerticalCheckObjectsToIgnore, this.myVerticalCheckObjectsToIgnore);
     this.myVerticalBlockColliderType = other.myVerticalBlockColliderType;
 };
 
