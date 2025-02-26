@@ -1,5 +1,5 @@
-import { Component, MeshComponent, Object3D, property, TextComponent, WonderlandEngine } from "@wonderlandengine/api";
-import { Cursor, CursorTarget } from "@wonderlandengine/components";
+import { Component, type ListenerCallback, MeshComponent, Object3D, property, TextComponent, WonderlandEngine } from "@wonderlandengine/api";
+import { Cursor, CursorTarget, type FingerCursor, type EventTypes } from "@wonderlandengine/components";
 import { AudioPlayer } from "../../../../audio/audio_player.js";
 import { AudioSetup } from "../../../../audio/audio_setup.js";
 import { Timer } from "../../../../cauldron/cauldron/timer.js";
@@ -787,9 +787,9 @@ export class CursorButtonComponent extends Component {
 
     public override onActivate(): void {
         if (this._myCursorTarget != null) {
-            this._myCursorTarget.onUnhover.add(this._onUnhover.bind(this), { id: this });
-            this._myCursorTarget.onHover.add(this._onHover.bind(this), { id: this });
-            this._myCursorTarget.onDown.add(this._onDown.bind(this), { id: this });
+            this._myCursorTarget.onUnhover.add(this._onUnhover.bind(this) as ListenerCallback<[Object3D, Cursor | FingerCursor, (EventTypes | undefined)?]>, { id: this });
+            this._myCursorTarget.onHover.add(this._onHover.bind(this) as ListenerCallback<[Object3D, Cursor | FingerCursor, (EventTypes | undefined)?]>, { id: this });
+            this._myCursorTarget.onDown.add(this._onDown.bind(this) as ListenerCallback<[Object3D, Cursor | FingerCursor, (EventTypes | undefined)?]>, { id: this });
             this._myCursorTarget.onUpWithDown.add(this.onUpWithDown.bind(this), { id: this });
         }
     }
