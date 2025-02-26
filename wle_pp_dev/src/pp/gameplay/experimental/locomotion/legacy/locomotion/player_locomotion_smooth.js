@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { Timer } from "../../../../../cauldron/cauldron/timer.js";
 import { XRUtils } from "../../../../../cauldron/utils/xr_utils.js";
 import { Handedness } from "../../../../../input/cauldron/input_types.js";
@@ -234,13 +235,13 @@ PlayerLocomotionSmooth.prototype.update = function () {
                 }
 
                 let movementIntensity = axes.vec2_length();
-                this._myCurrentSpeed = Math.pp_lerp(0, maxSpeed, movementIntensity);
+                this._myCurrentSpeed = MathUtils.lerp(0, maxSpeed, movementIntensity);
 
                 if (collisionRuntimeParams.myIsSliding && this._myParams.mySpeedSlowDownPercentageOnWallSlid != 1) {
                     let slowPercentage = this._myParams.mySpeedSlowDownPercentageOnWallSlid;
 
-                    let slidStrength = Math.pp_mapToRange(Math.abs(collisionRuntimeParams.mySlidingMovementAngle), 0, 90, 0, 1);
-                    slowPercentage = Math.pp_lerp(1, slowPercentage, slidStrength);
+                    let slidStrength = MathUtils.mapToRange(Math.abs(collisionRuntimeParams.mySlidingMovementAngle), 0, 90, 0, 1);
+                    slowPercentage = MathUtils.lerp(1, slowPercentage, slidStrength);
 
                     this._myCurrentSpeed = this._myCurrentSpeed * slowPercentage;
                 }
@@ -307,7 +308,7 @@ PlayerLocomotionSmooth.prototype.update = function () {
                 this._myLocomotionRuntimeParams.myGravitySpeed += this._myParams.myGravityAcceleration * dt;
 
                 if (Math.abs(this._myLocomotionRuntimeParams.myGravitySpeed) > Math.abs(this._myParams.myMaxGravitySpeed)) {
-                    this._myLocomotionRuntimeParams.myGravitySpeed = Math.pp_sign(this._myParams.myGravityAcceleration) * Math.abs(this._myParams.myMaxGravitySpeed);
+                    this._myLocomotionRuntimeParams.myGravitySpeed = MathUtils.sign(this._myParams.myGravityAcceleration) * Math.abs(this._myParams.myMaxGravitySpeed);
                 }
 
                 verticalMovement = playerUp.vec3_scale(this._myLocomotionRuntimeParams.myGravitySpeed * dt, verticalMovement);

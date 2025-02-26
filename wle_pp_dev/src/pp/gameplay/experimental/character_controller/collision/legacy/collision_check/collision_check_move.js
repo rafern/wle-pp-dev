@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { quat2_create, vec3_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../../../pp/globals.js";
 import { CollisionCheckVertical } from "./collision_check_vertical.js";
@@ -100,7 +101,7 @@ CollisionCheckMove.prototype._move = function () {
             let movementLength = movement.vec3_length();
             let equalStepLength = movementLength / maxSteps;
 
-            let stepLength = Math.pp_clamp(equalStepLength, minLength, maxLength);
+            let stepLength = MathUtils.clamp(equalStepLength, minLength, maxLength);
             if (stepLength != equalStepLength) {
                 movementStepAmount = Math.ceil(movementLength / stepLength);
                 movementStep = movementStep.vec3_normalize(movementStep).vec3_scale(stepLength, movementStep);
@@ -356,7 +357,7 @@ CollisionCheckMove.prototype._moveStep = function () {
             surfaceAdjustedVerticalMovement = this._adjustVerticalMovementWithSurface(fixedHorizontalMovement, verticalMovement, transformUp, collisionCheckParams, collisionRuntimeParams, this._myPrevCollisionRuntimeParams, surfaceAdjustedVerticalMovement);
 
             newFeetPosition = feetPosition.vec3_add(fixedHorizontalMovement, newFeetPosition);
-            let originalMovementSign = Math.pp_sign(verticalMovement.vec3_lengthSigned(transformUp), 0);
+            let originalMovementSign = MathUtils.sign(verticalMovement.vec3_lengthSigned(transformUp), 0);
 
             fixedVerticalMovement.vec3_zero();
             fixedVerticalMovement = this._verticalCheck(surfaceAdjustedVerticalMovement, originalMovementSign, newFeetPosition, height, transformUp, forwardForVertical, collisionCheckParams, collisionRuntimeParams, fixedVerticalMovement);
@@ -581,7 +582,7 @@ CollisionCheckMove.prototype._syncCollisionRuntimeParamsWithPrevious = function 
                     let angleSigned = surfaceAdjustedHorizontalMovement.vec3_angleSigned(previousCollisionRuntimeParams.myLastValidSurfaceAdjustedHorizontalMovement, up);
                     let angleSignedThreshold = 10;
                     if (Math.abs(angleSigned) < 180 - angleSignedThreshold) {
-                        collisionRuntimeParams.mySliding90DegreesSign = Math.pp_sign(angleSigned);
+                        collisionRuntimeParams.mySliding90DegreesSign = MathUtils.sign(angleSigned);
                         //console.error("special sign");
                     }
                 }

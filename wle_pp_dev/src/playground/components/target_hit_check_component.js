@@ -1,5 +1,5 @@
 import { Component, PhysXComponent } from "@wonderlandengine/api";
-import { Globals, GrabbableComponent, PhysicsCollisionCollector } from "wle-pp";
+import { Globals, GrabbableComponent, MathUtils, PhysicsCollisionCollector } from "wle-pp";
 import { ParticlesSpawnerComponent } from "./particles_spawner_component.js";
 
 export class TargetHitCheckComponent extends Component {
@@ -37,7 +37,7 @@ export class TargetHitCheckComponent extends Component {
 
     _strike(strikeSource) {
         this._mySFX.setPosition(strikeSource.pp_getPosition());
-        this._mySFX.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+        this._mySFX.setPitch(MathUtils.random(1.25 - 0.15, 1.25 + 0.05));
         this._mySFX.play();
 
         this._myParticlesSpawner.spawn(strikeSource.pp_getPosition());

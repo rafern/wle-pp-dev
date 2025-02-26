@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { vec3_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { CollisionCheckSurface } from "./collision_check_surface.js";
 
@@ -121,9 +122,9 @@ CollisionCheckHorizontalBase.prototype._ignoreSurfaceAngle = function () {
         let groundIgnoreHeight = isMovementCheck ? collisionCheckParams.myHorizontalMovementGroundAngleIgnoreHeight : collisionCheckParams.myHorizontalPositionGroundAngleIgnoreHeight;
         let ceilingIgnoreHeight = isMovementCheck ? collisionCheckParams.myHorizontalMovementCeilingAngleIgnoreHeight : collisionCheckParams.myHorizontalPositionCeilingAngleIgnoreHeight;
         if (isGround && groundIgnoreHeight != null) {
-            surfaceIgnoreHeight = Math.pp_clamp(groundIgnoreHeight + 0.0002, 0, height);
+            surfaceIgnoreHeight = MathUtils.clamp(groundIgnoreHeight + 0.0002, 0, height);
         } else if (!isGround && ceilingIgnoreHeight != null) {
-            surfaceIgnoreHeight = Math.pp_clamp(height - ceilingIgnoreHeight - 0.0002, 0, height);
+            surfaceIgnoreHeight = MathUtils.clamp(height - ceilingIgnoreHeight - 0.0002, 0, height);
         }
 
         let surfaceIgnoreMaxMovementLeft = null;

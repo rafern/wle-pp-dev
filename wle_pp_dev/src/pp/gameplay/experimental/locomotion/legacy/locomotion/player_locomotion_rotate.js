@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { XRUtils } from "../../../../../cauldron/utils/xr_utils.js";
 import { Handedness } from "../../../../../input/cauldron/input_types.js";
 import { GamepadAxesID } from "../../../../../input/gamepad/gamepad_buttons.js";
@@ -104,7 +105,7 @@ PlayerLocomotionRotate.prototype._rotateHeadHorizontally = function () {
         if (!this._myParams.myIsSnapTurn || (this._myParams.mySnapTurnOnlyVR && !XRUtils.isSessionActive(this._myParams.myEngine))) {
             if (Math.abs(axes[0]) > this._myParams.myRotationMinStickIntensityThreshold) {
                 let rotationIntensity = -axes[0];
-                let speed = Math.pp_lerp(0, this._myParams.myMaxRotationSpeed, Math.abs(rotationIntensity)) * Math.pp_sign(rotationIntensity);
+                let speed = MathUtils.lerp(0, this._myParams.myMaxRotationSpeed, Math.abs(rotationIntensity)) * MathUtils.sign(rotationIntensity);
 
                 headRotation.quat_fromAxis(speed * dt, playerUp);
             }
@@ -115,7 +116,7 @@ PlayerLocomotionRotate.prototype._rotateHeadHorizontally = function () {
                 }
             } else if (!this._mySmoothSnapHorizontalRunning) {
                 if (Math.abs(axes[0]) > this._myParams.mySnapTurnActivateThreshold) {
-                    let angleToRotate = -Math.pp_sign(axes[0]) * this._myParams.mySnapTurnAngle;
+                    let angleToRotate = -MathUtils.sign(axes[0]) * this._myParams.mySnapTurnAngle;
 
                     if (!this._myParams.mySmoothSnapEnabled) {
                         headRotation.quat_fromAxis(angleToRotate, playerUp);
@@ -130,7 +131,7 @@ PlayerLocomotionRotate.prototype._rotateHeadHorizontally = function () {
         }
 
         if (this._mySmoothSnapHorizontalRunning) {
-            let angleToRotate = Math.pp_sign(this._mySmoothSnapHorizontalAngleToPerform) * (this._myParams.mySmoothSnapSpeedDegrees * dt);
+            let angleToRotate = MathUtils.sign(this._mySmoothSnapHorizontalAngleToPerform) * (this._myParams.mySmoothSnapSpeedDegrees * dt);
             if (Math.abs(angleToRotate) > Math.abs(this._mySmoothSnapHorizontalAngleToPerform) - Math.PP_EPSILON) {
                 angleToRotate = this._mySmoothSnapHorizontalAngleToPerform;
             }
@@ -187,7 +188,7 @@ PlayerLocomotionRotate.prototype._rotateHeadVertically = function () {
         if (!this._myParams.myIsSnapTurn || (this._myParams.mySnapTurnOnlyVR && !XRUtils.isSessionActive(this._myParams.myEngine))) {
             if (Math.abs(axes[1]) > this._myParams.myRotationMinStickIntensityThreshold) {
                 let rotationIntensity = axes[1];
-                angleToRotate = Math.pp_lerp(0, this._myParams.myMaxRotationSpeed, Math.abs(rotationIntensity)) * Math.pp_sign(rotationIntensity) * dt;
+                angleToRotate = MathUtils.lerp(0, this._myParams.myMaxRotationSpeed, Math.abs(rotationIntensity)) * MathUtils.sign(rotationIntensity) * dt;
             }
         } else {
             if (!this._mySnapCharge) {
@@ -196,21 +197,21 @@ PlayerLocomotionRotate.prototype._rotateHeadVertically = function () {
                 }
             } else if (!this._mySmoothSnapVerticalRunning) {
                 if (Math.abs(axes[1]) > this._myParams.mySnapTurnActivateThreshold) {
-                    angleToRotate = Math.pp_sign(axes[1]) * this._myParams.mySnapTurnAngle;
+                    angleToRotate = MathUtils.sign(axes[1]) * this._myParams.mySnapTurnAngle;
 
                     // Adjust rotation to closest snap step
 
-                    let angleWithUp = Math.pp_angleClamp(headUp.vec3_angleSigned(referenceUp, referenceRight));
+                    let angleWithUp = MathUtils.angleClamp(headUp.vec3_angleSigned(referenceUp, referenceRight));
                     let snapStep = Math.round(angleWithUp / this._myParams.mySnapTurnAngle);
 
-                    let snapAngle = Math.pp_angleClamp(snapStep * this._myParams.mySnapTurnAngle);
-                    let angleToAlign = -Math.pp_angleDistanceSigned(angleWithUp, snapAngle);
+                    let snapAngle = MathUtils.angleClamp(snapStep * this._myParams.mySnapTurnAngle);
+                    let angleToAlign = -MathUtils.angleDistanceSigned(angleWithUp, snapAngle);
 
                     if (Math.abs(angleToAlign) > 1) {
-                        if (Math.pp_sign(angleToRotate) == Math.pp_sign(angleToAlign)) {
+                        if (MathUtils.sign(angleToRotate) == MathUtils.sign(angleToAlign)) {
                             angleToRotate = angleToAlign;
                         } else {
-                            angleToRotate = (-Math.pp_sign(angleToAlign) * this._myParams.mySnapTurnAngle) + angleToAlign;
+                            angleToRotate = (-MathUtils.sign(angleToAlign) * this._myParams.mySnapTurnAngle) + angleToAlign;
                         }
                     } else if (Math.abs(angleToAlign) > Math.PP_EPSILON_DEGREES) {
                         angleToRotate += angleToAlign;
@@ -227,7 +228,7 @@ PlayerLocomotionRotate.prototype._rotateHeadVertically = function () {
         }
 
         if (this._mySmoothSnapVerticalRunning) {
-            angleToRotate = Math.pp_sign(this._mySmoothSnapVerticalAngleToPerform) * (this._myParams.mySmoothSnapSpeedDegrees * dt);
+            angleToRotate = MathUtils.sign(this._mySmoothSnapVerticalAngleToPerform) * (this._myParams.mySmoothSnapSpeedDegrees * dt);
             if (Math.abs(angleToRotate) > Math.abs(this._mySmoothSnapVerticalAngleToPerform) - Math.PP_EPSILON) {
                 angleToRotate = this._mySmoothSnapVerticalAngleToPerform;
             }
@@ -247,9 +248,9 @@ PlayerLocomotionRotate.prototype._rotateHeadVertically = function () {
             if (this._myParams.myClampVerticalAngle) {
                 let maxVerticalAngle = Math.max(0, this._myParams.myMaxVerticalAngle - 0.0001);
                 newUp = head.pp_getUp(newUp);
-                let angleWithUp = Math.pp_angleClamp(newUp.vec3_angleSigned(referenceUp, referenceRight));
+                let angleWithUp = MathUtils.angleClamp(newUp.vec3_angleSigned(referenceUp, referenceRight));
                 if (Math.abs(angleWithUp) > maxVerticalAngle) {
-                    let fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * Math.pp_sign(angleWithUp);
+                    let fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * MathUtils.sign(angleWithUp);
                     headRotation.quat_fromAxis(fixAngle, referenceRight);
                     this._myParams.myPlayerTransformManager.getPlayerHeadManager().rotateHeadQuat(headRotation);
                 }

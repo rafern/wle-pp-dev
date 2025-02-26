@@ -1,6 +1,6 @@
 import { Component, Emitter, PhysXComponent, Property } from "@wonderlandengine/api";
 import { PhysicsCollisionCollector } from "../../cauldron/physics/physics_collision_collector.js";
-import { EasingFunction } from "../../cauldron/utils/math_utils.js";
+import { EasingFunction, MathUtils } from "../../cauldron/utils/math_utils.js";
 import { HandednessIndex, InputSourceType } from "../../input/cauldron/input_types.js";
 import { InputUtils } from "../../input/cauldron/input_utils.js";
 import { GamepadButtonID } from "../../input/gamepad/gamepad_buttons.js";
@@ -48,7 +48,7 @@ export class GrabberHandComponent extends Component {
         this._myHandAngularVelocityHistory = new Array(this._myAngularVelocityHistorySize);
         this._myHandAngularVelocityHistory.fill(vec3_create());
 
-        this._myThrowMaxAngularSpeedRadians = Math.pp_toRadians(this._myThrowMaxAngularSpeed);
+        this._myThrowMaxAngularSpeedRadians = MathUtils.toRadians(this._myThrowMaxAngularSpeed);
 
         this._myGrabEmitter = new Emitter();      // Signature: listener(grabber, grabbable)
         this._myThrowEmitter = new Emitter();     // Signature: listener(grabber, grabbable)
@@ -172,7 +172,7 @@ export class GrabberHandComponent extends Component {
                 let firstDistance = firstPosition.vec3_distance(grabberPosition);
                 let secondDistance = secondPosition.vec3_distance(grabberPosition);
 
-                return Math.pp_sign(firstDistance - secondDistance, 0);
+                return MathUtils.sign(firstDistance - secondDistance, 0);
             });
 
             for (let grabbableToGrab of grabbablesToGrab) {
@@ -286,14 +286,14 @@ export class GrabberHandComponent extends Component {
 
         // This way I give an increasing and smooth boost to the throw so that when u want to perform a weak throw, the value is not changed, but if u put more speed
         // it will be boosted to make it easier and still feel good and natural (value does not increase suddenly)
-        let speedEaseMultiplier = Math.pp_mapToRange(speed, this._myThrowLinearVelocityBoostMinSpeedThreshold, this._myThrowLinearVelocityBoostMaxSpeedThreshold, 0, 1);
+        let speedEaseMultiplier = MathUtils.mapToRange(speed, this._myThrowLinearVelocityBoostMinSpeedThreshold, this._myThrowLinearVelocityBoostMaxSpeedThreshold, 0, 1);
         speedEaseMultiplier = EasingFunction.easeIn(speedEaseMultiplier);
 
         // Add the boost to the speed
         let extraSpeed = speed * (speedEaseMultiplier * this._myThrowLinearVelocityBoost);
         speed += extraSpeed;
         speed *= this._myThrowLinearVelocityMultiplier;
-        speed = Math.pp_clamp(speed, 0, this._myThrowMaxLinearSpeed);
+        speed = MathUtils.clamp(speed, 0, this._myThrowMaxLinearSpeed);
 
         if (this._myDebugEnabled && Globals.isDebugEnabled(this.engine)) {
             this._debugDirectionLines(linearVelocityHistory);
@@ -323,7 +323,7 @@ export class GrabberHandComponent extends Component {
         // Speed
         let speed = angularVelocity.vec3_length();
 
-        speed = Math.pp_clamp(speed * this._myThrowAngularVelocityMultiplier, 0, this._myThrowMaxAngularSpeedRadians);
+        speed = MathUtils.clamp(speed * this._myThrowAngularVelocityMultiplier, 0, this._myThrowMaxAngularSpeedRadians);
 
         // Direction
         let direction = angularVelocity.vec3_clone();

@@ -2,7 +2,7 @@
 
 import { Timer } from "../../../../../cauldron/cauldron/timer.js";
 import { FSM } from "../../../../../cauldron/fsm/fsm.js";
-import { EasingFunction } from "../../../../../cauldron/utils/math_utils.js";
+import { EasingFunction, MathUtils } from "../../../../../cauldron/utils/math_utils.js";
 import { XRUtils } from "../../../../../cauldron/utils/xr_utils.js";
 import { VisualMesh, VisualMeshParams } from "../../../../../cauldron/visual/elements/visual_mesh.js";
 import { MaterialUtils } from "../../../../../cauldron/wl/utils/material_utils.js";
@@ -240,7 +240,7 @@ export class PlayerObscureManager {
         if (!isFadingIn) {
             newObscureLevel = Math.min(newObscureLevel, this._myTargetObscureLevel);
         } else {
-            newObscureLevel = Math.pp_clamp(1 - newObscureLevel, 0, 1);
+            newObscureLevel = MathUtils.clamp(1 - newObscureLevel, 0, 1);
             newObscureLevel = Math.max(newObscureLevel, this._myTargetObscureLevel);
         }
 
@@ -293,10 +293,10 @@ export class PlayerObscureManager {
 
         if (isFadingIn) {
             this._myFadeTimer.start(this._myParams.myObscureFadeInSeconds);
-            this._myFadeTimer.setPercentage(Math.pp_clamp(1 - closestPercentage, 0, 1));
+            this._myFadeTimer.setPercentage(MathUtils.clamp(1 - closestPercentage, 0, 1));
         } else {
             this._myFadeTimer.start(this._myParams.myObscureFadeOutSeconds);
-            this._myFadeTimer.setPercentage(Math.pp_clamp(closestPercentage, 0, 1));
+            this._myFadeTimer.setPercentage(MathUtils.clamp(closestPercentage, 0, 1));
         }
     }
 
@@ -334,7 +334,7 @@ export class PlayerObscureManager {
                     let distance = this._myParams.myPlayerTransformManager.getDistanceToRealHead();
                     let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenHeadColliding;
                     if (relativeDistance >= 0) {
-                        let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenHeadColliding, 0, 1);
+                        let relativeDistancePercentage = MathUtils.clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenHeadColliding, 0, 1);
                         if (isNaN(relativeDistancePercentage)) {
                             relativeDistancePercentage = 1;
                         }
@@ -347,7 +347,7 @@ export class PlayerObscureManager {
                     let distance = this._myParams.myPlayerTransformManager.getDistanceToReal();
                     let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenBodyColliding;
                     if (relativeDistance >= 0) {
-                        let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenBodyColliding, 0, 1);
+                        let relativeDistancePercentage = MathUtils.clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenBodyColliding, 0, 1);
                         if (isNaN(relativeDistancePercentage)) {
                             relativeDistancePercentage = 1;
                         }
@@ -360,7 +360,7 @@ export class PlayerObscureManager {
                     let distance = this._myParams.myPlayerTransformManager.getDistanceToReal();
                     let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenFloating;
                     if (relativeDistance >= 0) {
-                        let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFloating, 0, 1);
+                        let relativeDistancePercentage = MathUtils.clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFloating, 0, 1);
                         if (isNaN(relativeDistancePercentage)) {
                             relativeDistancePercentage = 1;
                         }
@@ -373,7 +373,7 @@ export class PlayerObscureManager {
                     let distance = this._myParams.myPlayerTransformManager.getDistanceToReal();
                     let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenFar;
                     if (relativeDistance >= 0) {
-                        let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFar, 0, 1);
+                        let relativeDistancePercentage = MathUtils.clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFar, 0, 1);
                         if (isNaN(relativeDistancePercentage)) {
                             relativeDistancePercentage = 1;
                         }

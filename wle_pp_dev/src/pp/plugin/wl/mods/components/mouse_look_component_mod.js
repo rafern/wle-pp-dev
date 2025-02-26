@@ -3,6 +3,7 @@ import { Timer } from "../../../../cauldron/cauldron/timer.js";
 import { Globals } from "../../../../pp/globals.js";
 import { vec3_create } from "../../../js/extensions/array/vec_create_extension.js";
 import { PluginUtils } from "../../../utils/plugin_utils.js";
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 
 export function initMouseLookComponentMod() {
     _initMouseLookComponentModPrototype();
@@ -190,9 +191,9 @@ function _initMouseLookComponentModPrototype() {
 
                     let maxVerticalAngle = 89 - 0.001;
                     newUp = this.object.pp_getUp(newUp);
-                    let angleWithUp = Math.pp_angleClamp(newUp.vec3_angleSigned(referenceUp, referenceRight));
+                    let angleWithUp = MathUtils.angleClamp(newUp.vec3_angleSigned(referenceUp, referenceRight));
                     if (Math.abs(angleWithUp) > maxVerticalAngle) {
-                        let fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * Math.pp_sign(angleWithUp);
+                        let fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * MathUtils.sign(angleWithUp);
                         this.object.pp_rotateAxis(fixAngle, referenceRight);
                     }
 

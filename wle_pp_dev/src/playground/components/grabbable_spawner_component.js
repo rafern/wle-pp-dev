@@ -1,5 +1,5 @@
 import { Component, Property } from "@wonderlandengine/api";
-import { Timer, vec3_create } from "wle-pp";
+import { MathUtils, Timer, vec3_create } from "wle-pp";
 
 export class GrabbableSpawnerComponent extends Component {
     static TypeName = "grabbable-spawner";
@@ -43,7 +43,7 @@ export class GrabbableSpawnerComponent extends Component {
     }
 
     _spawn() {
-        this._myCurrentGrabbable = Math.pp_randomPick(this._myPrototypes).pp_clone();
+        this._myCurrentGrabbable = MathUtils.randomPick(this._myPrototypes).pp_clone();
         this._myCurrentGrabbable.pp_setParent(this.object);
         this._myCurrentGrabbable.pp_setPosition(this.object.pp_getPosition());
         this._myCurrentGrabbable.pp_setActive(true);

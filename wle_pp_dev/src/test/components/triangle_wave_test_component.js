@@ -1,5 +1,5 @@
 import { Component, Property } from "@wonderlandengine/api";
-import { EasingFunction, vec3_create } from "wle-pp";
+import { EasingFunction, MathUtils, vec3_create } from "wle-pp";
 
 export class TriangleWaveTestComponent extends Component {
     static TypeName = "triangle-wave-test";
@@ -24,12 +24,12 @@ export class TriangleWaveTestComponent extends Component {
                 this._myTimeElapsed += this._mySign * dt;
             }
 
-            let verticalOffset = Math.pp_interpolate(-3, 1, this._myTimeElapsed, EasingFunction.linear);
+            let verticalOffset = MathUtils.interpolate(-3, 1, this._myTimeElapsed, EasingFunction.linear);
             this.object.pp_resetTransformLocal();
             this.object.pp_translateLocal(vec3_create(0, verticalOffset, 0));
         } else {
             this._myTimeElapsed += dt;
-            let verticalOffset = Math.pp_interpolatePeriodic(-3, 1, this._myTimeElapsed, EasingFunction.linear);
+            let verticalOffset = MathUtils.interpolatePeriodic(-3, 1, this._myTimeElapsed, EasingFunction.linear);
             this.object.pp_resetTransformLocal();
             this.object.pp_translateLocal(vec3_create(0, verticalOffset, 0));
         }

@@ -4,6 +4,7 @@ import { vec2_create } from "../../plugin/js/extensions/array/vec_create_extensi
 import { Handedness } from "../cauldron/input_types.js";
 import { HandPose } from "../pose/hand_pose.js";
 import { GamepadAxesEvent, GamepadAxesID, GamepadAxesInfo, GamepadButtonEvent, GamepadButtonID, GamepadButtonInfo, GamepadPulseInfo } from "./gamepad_buttons.js";
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 
 export class GamepadRawButtonData {
     public myValue: number = 0;
@@ -159,7 +160,7 @@ export abstract class Gamepad {
     }
 
     public pulse(intensity: number, duration: number = 0): void {
-        this._myPulseInfo.myIntensity = Math.pp_clamp(intensity, 0, 1);
+        this._myPulseInfo.myIntensity = MathUtils.clamp(intensity, 0, 1);
         this._myPulseInfo.myDuration = Math.max(duration, 0);
     }
 

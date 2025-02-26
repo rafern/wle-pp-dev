@@ -1,5 +1,5 @@
 import { Component } from "@wonderlandengine/api";
-import { EasyTuneNumber, Globals, Timer } from "wle-pp";
+import { EasyTuneNumber, Globals, MathUtils, Timer } from "wle-pp";
 
 export class WaveMovementComponent extends Component {
     static TypeName = "wave-movement";
@@ -13,7 +13,7 @@ export class WaveMovementComponent extends Component {
 
         this._myStartPosition = this.object.pp_getPosition();
 
-        this._myCurrentTimes = [Math.pp_random(0, 100), Math.pp_random(0, 100), Math.pp_random(0, 100)];
+        this._myCurrentTimes = [MathUtils.random(0, 100), MathUtils.random(0, 100), MathUtils.random(0, 100)];
 
         this._myChangeParamsTimers = [new Timer(3), this._randomTimer(), this._randomTimer()];
 
@@ -25,7 +25,7 @@ export class WaveMovementComponent extends Component {
         this._myMaxDistanceTargets = this._myMaxDistances.pp_clone();
         this._mySpeedMultiplierTargets = this._mySpeedMultipliers.pp_clone();
 
-        this._myRandomSigns = [Math.pp_randomPick(-1, 1), Math.pp_randomPick(-1, 1), Math.pp_randomPick(-1, 1)];
+        this._myRandomSigns = [MathUtils.randomPick(-1, 1), MathUtils.randomPick(-1, 1), MathUtils.randomPick(-1, 1)];
 
         Globals.getEasyTuneVariables(this.engine).add(new EasyTuneNumber("Wave Speed Multiplier", 1.00, null, true, 2, 5, undefined, undefined, undefined, this.engine));
 
@@ -61,24 +61,24 @@ export class WaveMovementComponent extends Component {
             }
 
             for (let i = 0; i < this._mySpeedMultipliers.length; i++) {
-                this._mySpeedMultipliers[i] = Math.pp_lerp(this._mySpeedMultipliers[i], this._mySpeedMultiplierTargets[i], 0.3 * dt);
+                this._mySpeedMultipliers[i] = MathUtils.lerp(this._mySpeedMultipliers[i], this._mySpeedMultiplierTargets[i], 0.3 * dt);
             }
 
             for (let i = 0; i < this._myMaxDistances.length; i++) {
-                this._myMaxDistances[i] = Math.pp_lerp(this._myMaxDistances[i], this._myMaxDistanceTargets[i], 0.3 * dt);
+                this._myMaxDistances[i] = MathUtils.lerp(this._myMaxDistances[i], this._myMaxDistanceTargets[i], 0.3 * dt);
             }
         }
     }
 
     _randomTimer() {
-        return new Timer(Math.pp_random(4, 8));
+        return new Timer(MathUtils.random(4, 8));
     }
 
     _randomSpeedMultiplier() {
-        return Math.pp_random(0.25, 1.5);
+        return MathUtils.random(0.25, 1.5);
     }
 
     _randomMaxDistance(middle) {
-        return Math.pp_random(middle - middle / 3, middle + middle / 3);
+        return MathUtils.random(middle - middle / 3, middle + middle / 3);
     }
 }

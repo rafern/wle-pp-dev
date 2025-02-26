@@ -1,4 +1,4 @@
-import { EasingFunction } from "../../../cauldron/utils/math_utils.js";
+import { EasingFunction, MathUtils } from "../../../cauldron/utils/math_utils.js";
 
 /** You can just put `fromValue` if u want a value that doesn't actually change -> `new NumberOverFactor(0)` */
 export class NumberOverFactor {
@@ -27,8 +27,8 @@ export class NumberOverFactor {
     }
 
     public get(factor: number): number {
-        const interpolationFactor = this._myEasingFunction(Math.pp_mapToRange(factor, this._myFromFactor, this._myToFactor, 0, 1));
-        let currentValue = Math.pp_lerp(this._myFromValue, this._myToValue, interpolationFactor);
+        const interpolationFactor = this._myEasingFunction(MathUtils.mapToRange(factor, this._myFromFactor, this._myToFactor, 0, 1));
+        let currentValue = MathUtils.lerp(this._myFromValue, this._myToValue, interpolationFactor);
 
         if (this._myRoundingFunction != null) {
             currentValue = this._myRoundingFunction(currentValue, this._myFromValue, this._myToValue);
@@ -67,8 +67,8 @@ export class NumberOverFactor {
     public isInsideAngleRangeDegrees(value: number, factor: number): boolean {
         const currentValue = this.get(factor);
 
-        const clampedValue = Math.pp_angleClampDegrees(value);
-        const clampedCurrentValue = Math.pp_angleClampDegrees(currentValue);
+        const clampedValue = MathUtils.angleClampDegrees(value);
+        const clampedCurrentValue = MathUtils.angleClampDegrees(currentValue);
 
         return clampedValue == clampedCurrentValue;
     }
@@ -76,8 +76,8 @@ export class NumberOverFactor {
     public isInsideAngleRangeRadians(value: number, factor: number): boolean {
         const currentValue = this.get(factor);
 
-        const clampedValue = Math.pp_angleClampRadians(value);
-        const clampedCurrentValue = Math.pp_angleClampRadians(currentValue);
+        const clampedValue = MathUtils.angleClampRadians(value);
+        const clampedCurrentValue = MathUtils.angleClampRadians(currentValue);
 
         return clampedValue == clampedCurrentValue;
     }
@@ -128,9 +128,9 @@ export class NumberRangeOverFactor {
         let randomValue = null;
 
         if (this._myRoundingFunction) {
-            randomValue = Math.pp_randomInt(rangeStart, rangeEnd);
+            randomValue = MathUtils.randomInt(rangeStart, rangeEnd);
         } else {
-            randomValue = Math.pp_random(rangeStart, rangeEnd);
+            randomValue = MathUtils.random(rangeStart, rangeEnd);
         }
 
         return randomValue;
@@ -187,14 +187,14 @@ export class NumberRangeOverFactor {
         const rangeStart = this._myRangeStartOverFactor.get(factor);
         const rangeEnd = this._myRangeEndOverFactor.get(factor);
 
-        return Math.pp_isInsideAngleRangeDegrees(value, rangeStart, rangeEnd);
+        return MathUtils.isInsideAngleRangeDegrees(value, rangeStart, rangeEnd);
     }
 
     public isInsideAngleRangeRadians(value: number, factor: number): boolean {
         const rangeStart = this._myRangeStartOverFactor.get(factor);
         const rangeEnd = this._myRangeEndOverFactor.get(factor);
 
-        return Math.pp_isInsideAngleRangeRadians(value, rangeStart, rangeEnd);
+        return MathUtils.isInsideAngleRangeRadians(value, rangeStart, rangeEnd);
     }
 }
 

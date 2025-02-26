@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { RaycastHit } from "../../../../../../cauldron/physics/physics_raycast_params.js";
 import { vec3_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { CollisionCheckHorizontal } from "./collision_check_horizontal.js";
@@ -36,7 +37,7 @@ CollisionCheckVertical.prototype._verticalCheck = function () {
         // #TODO the sign of 0 is by default downward, but it should probably be based on if u previously were on Ground or Ceiling
         // If none, ok downward, if on Ground downward, if on Ceiling upward, so that even without @myCheckVerticalBothDirection
         // if u were snapped to the ceiling u will keep snap on it even when 0 vertical movement
-        let movementSign = Math.pp_sign(verticalMovement.vec3_lengthSigned(up), -1);
+        let movementSign = MathUtils.sign(verticalMovement.vec3_lengthSigned(up), -1);
         let isMovementDownward = movementSign < 0;
 
         outFixedMovement.vec3_copy(verticalMovement);

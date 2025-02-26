@@ -10,6 +10,7 @@ import { CollisionCheckUtils } from "../../../character_controller/collision/leg
 import { CollisionCheckParams, CollisionRuntimeParams } from "../../../character_controller/collision/legacy/collision_check/collision_params.js";
 import { PlayerHeadManager } from "./player_head_manager.js";
 import { PlayerLocomotionTeleport } from "./teleport/player_locomotion_teleport.js";
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 
 export enum PlayerTransformManagerSyncFlag {
     BODY_COLLIDING = 0,
@@ -668,7 +669,7 @@ export class PlayerTransformManager {
             collisionRuntimeParams: new CollisionRuntimeParams()
         };
     public setHeight(height: number, forceSet: boolean = false): void {
-        const fixedHeight = Math.pp_clamp(height, this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
+        const fixedHeight = MathUtils.clamp(height, this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
         const previousHeight = this.getHeight();
 
         this._myValidHeight = fixedHeight;
@@ -886,7 +887,7 @@ export class PlayerTransformManager {
         }
 
         if (resetHeight) {
-            this._myValidHeight = Math.pp_clamp(this.getHeightReal(), this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
+            this._myValidHeight = MathUtils.clamp(this.getHeightReal(), this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
         }
 
         if (updateValidToReal) {
@@ -1397,7 +1398,7 @@ export class PlayerTransformManager {
         // Body Colliding
         if (!this._myIsFar && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
             const realHeight = this.getHeightReal();
-            if (Math.pp_clamp(realHeight, this._myParams.myIsBodyCollidingWhenHeightBelowValue ?? undefined, this._myParams.myIsBodyCollidingWhenHeightAboveValue ?? undefined) != realHeight) {
+            if (MathUtils.clamp(realHeight, this._myParams.myIsBodyCollidingWhenHeightBelowValue ?? undefined, this._myParams.myIsBodyCollidingWhenHeightAboveValue ?? undefined) != realHeight) {
                 this._myIsBodyColliding = true;
             } else {
                 collisionRuntimeParams.copy(this._myCollisionRuntimeParams);
@@ -1458,7 +1459,7 @@ export class PlayerTransformManager {
                         const maxLength = this._myParams.myFloatingSplitCheckMaxLength;
 
                         const movementLength = movementToCheck.vec3_length();
-                        const stepLength = Math.pp_clamp(movementLength, minLength ?? undefined, maxLength ?? undefined);
+                        const stepLength = MathUtils.clamp(movementLength, minLength ?? undefined, maxLength ?? undefined);
 
                         movementStepAmount = Math.ceil(movementLength / stepLength);
                         movementStep.vec3_normalize(movementStep).vec3_scale(stepLength, movementStep);
@@ -1588,7 +1589,7 @@ export class PlayerTransformManager {
             }
         }
 
-        const newHeight = Math.pp_clamp(this.getHeightReal(), this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
+        const newHeight = MathUtils.clamp(this.getHeightReal(), this._myParams.myMinHeight ?? undefined, this._myParams.myMaxHeight ?? undefined);
         this._myIsHeightColliding = false;
         // Height Colliding 
         if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.HEIGHT_COLLIDING)) {

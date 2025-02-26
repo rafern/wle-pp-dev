@@ -5,6 +5,7 @@ import { Timer } from "../cauldron/timer.js";
 import { PhysicsCollisionCollector } from "../physics/physics_collision_collector.js";
 import { RaycastParams, RaycastResults } from "../physics/physics_raycast_params.js";
 import { PhysicsUtils } from "../physics/physics_utils.js";
+import { MathUtils } from "../utils/math_utils.js";
 
 // Adjust the gravity to a low value like -0.05 to have better results, since the dynamic objects will move slowly instead of quickly falling far away
 export class BenchmarkMaxPhysXComponent extends Component {
@@ -154,19 +155,19 @@ export class BenchmarkMaxPhysXComponent extends Component {
                     for (let physX of this._myDynamicPhysXComponents) {
                         physX.kinematic = false;
                         let strength = 50;
-                        physX.linearVelocity = [Math.pp_random(-strength, strength), Math.pp_random(-strength, strength), Math.pp_random(-strength, strength)];
-                        physX.angularVelocity = [Math.pp_random(-strength, strength), Math.pp_random(-strength, strength), Math.pp_random(-strength, strength)];
+                        physX.linearVelocity = [MathUtils.random(-strength, strength), MathUtils.random(-strength, strength), MathUtils.random(-strength, strength)];
+                        physX.angularVelocity = [MathUtils.random(-strength, strength), MathUtils.random(-strength, strength), MathUtils.random(-strength, strength)];
                     }
                 }
             }
 
             for (let physX of this._myKinematicPhysXObjects) {
                 let strength = 5 * dt;
-                this._myTranslateVec3.vec3_set(Math.pp_random(-strength, strength), Math.pp_random(-strength, strength), Math.pp_random(-strength, strength));
+                this._myTranslateVec3.vec3_set(MathUtils.random(-strength, strength), MathUtils.random(-strength, strength), MathUtils.random(-strength, strength));
                 physX.pp_translate(this._myTranslateVec3);
 
                 let rotateStrength = 50 * dt;
-                this._myRotateVec3.vec3_set(Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength));
+                this._myRotateVec3.vec3_set(MathUtils.random(-rotateStrength, rotateStrength), MathUtils.random(-rotateStrength, rotateStrength), MathUtils.random(-rotateStrength, rotateStrength));
                 physX.pp_rotate(this._myRotateVec3);
             }
         }
@@ -178,8 +179,8 @@ export class BenchmarkMaxPhysXComponent extends Component {
         let distance = 10000;
 
         for (let i = 0; i < raycastCount; i++) {
-            let origin = [Math.pp_random(1, 2) * Math.pp_randomSign(), Math.pp_random(1, 2) * Math.pp_randomSign(), Math.pp_random(1, 2) * Math.pp_randomSign()];
-            let direction = [Math.pp_random(-1, 1), Math.pp_random(-1, 1), Math.pp_random(-1, 1)];
+            let origin = [MathUtils.random(1, 2) * MathUtils.randomSign(), MathUtils.random(1, 2) * MathUtils.randomSign(), MathUtils.random(1, 2) * MathUtils.randomSign()];
+            let direction = [MathUtils.random(-1, 1), MathUtils.random(-1, 1), MathUtils.random(-1, 1)];
             direction.vec3_normalize(direction);
 
             this._myRaycastParams.myOrigin.vec3_copy(origin);
@@ -227,7 +228,7 @@ export class BenchmarkMaxPhysXComponent extends Component {
         }
 
         let minExtraRotation = 0;
-        let maxExtraRotation = Math.pp_toRadians(10);
+        let maxExtraRotation = MathUtils.toRadians(10);
 
         let upDirection = vec3_create(0, 1, 0);
         let horizontalDirection = vec3_create(0, 0, -1);
@@ -280,8 +281,8 @@ export class BenchmarkMaxPhysXComponent extends Component {
 
     _addPhysX(physXDirection, staticDome, dynamicDome) {
         let position = physXDirection;
-        let scale = Math.pp_random(1, 10);
-        let shape = Math.pp_randomPick(Shape.Sphere, Shape.Box);
+        let scale = MathUtils.random(1, 10);
+        let shape = MathUtils.randomPick(Shape.Sphere, Shape.Box);
         if (this._myUseConvexMesh) {
             shape = Shape.ConvexMesh;
             scale *= this._myShapeScaleMultiplier;

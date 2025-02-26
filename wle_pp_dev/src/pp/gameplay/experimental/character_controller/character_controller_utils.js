@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { vec3_create } from "../../../plugin/js/extensions/array/vec_create_extension.js";
 
 export function computeGroundPerceivedAngle(surfaceNormal, direction, up) {
@@ -36,7 +37,7 @@ export let computeSurfacePerceivedAngle = function () {
 
         if (Math.abs(surfacePerceivedAngle) >= surfaceAngle) {
             if (surfaceAngle != 0 && surfaceAngle != 180) {
-                surfacePerceivedAngle = surfaceAngle * Math.pp_sign(surfacePerceivedAngle);
+                surfacePerceivedAngle = surfaceAngle * MathUtils.sign(surfacePerceivedAngle);
             } else {
                 surfacePerceivedAngle = surfaceAngle;
             }

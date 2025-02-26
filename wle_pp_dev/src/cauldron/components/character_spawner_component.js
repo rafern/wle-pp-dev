@@ -1,5 +1,6 @@
 import { Component, Property } from "@wonderlandengine/api";
 import { vec3_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
+import { MathUtils } from "../../pp/cauldron/utils/math_utils.js";
 
 export class CharacterSpawnerComponent extends Component {
     static TypeName = "character-spawner";
@@ -16,7 +17,7 @@ export class CharacterSpawnerComponent extends Component {
         this._myRootObject = this.object.pp_addChild();
 
         for (let i = 0; i < this._myAmount; i++) {
-            let spawnTall = Math.pp_randomBool();
+            let spawnTall = MathUtils.randomBool();
 
             let character = null;
 
@@ -27,8 +28,8 @@ export class CharacterSpawnerComponent extends Component {
             }
 
             character.pp_setParent(this._myRootObject);
-            let randomX = Math.pp_random(-this._myRoomSize, this._myRoomSize);
-            let randomZ = Math.pp_random(-this._myRoomSize, this._myRoomSize);
+            let randomX = MathUtils.random(-this._myRoomSize, this._myRoomSize);
+            let randomZ = MathUtils.random(-this._myRoomSize, this._myRoomSize);
             let y = this._myRoomHeight;
 
             character.pp_setPositionLocal(vec3_create(randomX, y, randomZ));

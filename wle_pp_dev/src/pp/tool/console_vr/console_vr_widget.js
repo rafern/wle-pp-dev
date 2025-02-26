@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { GamepadAxesID, GamepadButtonID } from "../../input/gamepad/gamepad_buttons.js";
 import { vec2_create } from "../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/globals.js";
@@ -653,7 +654,7 @@ export class ConsoleVRWidget {
 
     _clampScrollOffset() {
         let maxScroll = this._getMaxScrollOffset();
-        this._myScrollOffset = Math.pp_clamp(this._myScrollOffset, 0, maxScroll);
+        this._myScrollOffset = MathUtils.clamp(this._myScrollOffset, 0, maxScroll);
     }
 
     _getMaxScrollOffset() {

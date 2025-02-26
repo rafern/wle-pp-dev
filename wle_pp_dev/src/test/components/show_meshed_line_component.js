@@ -2,6 +2,7 @@ import { Component } from "@wonderlandengine/api";
 import { VisualLine, VisualLineParams } from "../../pp/cauldron/visual/elements/visual_line.js";
 import { vec4_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/pp/globals.js";
+import { MathUtils } from "wle-pp";
 
 export class ShowMeshedLineComponent extends Component {
     static TypeName = "show-meshed-line";
@@ -28,10 +29,10 @@ export class ShowMeshedLineComponent extends Component {
         visualParams.myStart = this.object.pp_getPosition();
         visualParams.myDirection = this.object.pp_getForward();
         visualParams.myRadius = 0.1;
-        visualParams.myMesh = Math.pp_randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.mySphere;
-        visualParams.mySegmentMesh = Math.pp_randomInt(0, 10) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.mySphere;
-        visualParams.myLineMesh = Math.pp_randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.myCone;
-        visualParams.myArrowMesh = Math.pp_randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.myCone;
+        visualParams.myMesh = MathUtils.randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.mySphere;
+        visualParams.mySegmentMesh = MathUtils.randomInt(0, 10) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.mySphere;
+        visualParams.myLineMesh = MathUtils.randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.myCone;
+        visualParams.myArrowMesh = MathUtils.randomInt(0, 1) == 1 ? Globals.getDefaultResources(this.engine).myMeshes.myCube : Globals.getDefaultResources(this.engine).myMeshes.myCone;
 
         //this._myVisualLine.paramsUpdated();
         Globals.getVisualManager(this.engine).draw(visualParams);

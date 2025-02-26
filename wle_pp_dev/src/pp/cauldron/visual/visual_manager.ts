@@ -12,6 +12,7 @@ import { VisualRaycast, VisualRaycastParams } from "./elements/visual_raycast.js
 import { VisualText, VisualTextParams } from "./elements/visual_text.js";
 import { VisualTorus, VisualTorusParams } from "./elements/visual_torus.js";
 import { VisualTransform, VisualTransformParams } from "./elements/visual_transform.js";
+import { MathUtils } from "../utils/math_utils.js";
 
 export class VisualManager {
 
@@ -34,7 +35,7 @@ export class VisualManager {
     constructor(engine: Readonly<WonderlandEngine> = Globals.getMainEngine()!) {
         this._myEngine = engine;
 
-        this._myObjectPoolManagerPrefix = this._getClassName() + "_" + Math.pp_randomUUID() + "_visual_element_type_";
+        this._myObjectPoolManagerPrefix = this._getClassName() + "_" + MathUtils.randomUUID() + "_visual_element_type_";
 
         this._addDefaultVisualElementTypes();
     }

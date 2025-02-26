@@ -1,5 +1,5 @@
 import { CollisionEventType, Component, Property, Shape } from "@wonderlandengine/api";
-import { vec3_create } from "wle-pp";
+import { MathUtils, vec3_create } from "wle-pp";
 import { Timer } from "../../pp/cauldron/cauldron/timer.js";
 import { Globals } from "../../pp/pp/globals.js";
 
@@ -29,7 +29,7 @@ export class BulletThroughWallTestComponent extends Component {
 
         this._myBullet = Globals.getScene(this.engine).addObject(this._myRootObject);
         this._myBullet.pp_setPositionLocal(vec3_create(0, 0, -2));
-        this._myBullet.pp_setRotationLocal([Math.pp_random(-180, 180), Math.pp_random(-180, 180), Math.pp_random(-180, 180)]);
+        this._myBullet.pp_setRotationLocal([MathUtils.random(-180, 180), MathUtils.random(-180, 180), MathUtils.random(-180, 180)]);
 
         this._myWallPhysX = this._myWall.pp_addComponent("physx", {
             "shape": Shape.Box,
@@ -92,7 +92,7 @@ export class BulletThroughWallTestComponent extends Component {
             this._myKinematicTimer.start(0.5);
             this._myBullet.pp_resetTransformLocal();
             this._myBullet.pp_setPositionLocal(vec3_create(0, 0, -2));
-            this._myBullet.pp_setRotationLocal([Math.pp_random(-180, 180), Math.pp_random(-180, 180), Math.pp_random(-180, 180)]);
+            this._myBullet.pp_setRotationLocal([MathUtils.random(-180, 180), MathUtils.random(-180, 180), MathUtils.random(-180, 180)]);
 
             if (this._myCollisionTouchDetected && this._myCollisionTouchLostDetected) {
                 console.log("Bullet Collision Detected");

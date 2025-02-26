@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { vec3_create, vec4_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../../../pp/globals.js";
 import { CollisionCheckHorizontalMovement } from "./collision_check_horizontal_movement.js";
@@ -364,8 +365,8 @@ CollisionCheckHorizontalSliding.prototype._internalHorizontalSlide = function ()
             }
 
             let currentAngle = 90 * slidingSign;
-            let maxAngle = Math.pp_angleClamp(slidingMovement.vec3_angleSigned(movement.vec3_rotateAxis(90 * slidingSign, up, movement90), up) * slidingSign, true) * slidingSign;
-            let minAngle = Math.pp_angleClamp(slidingMovement.vec3_angleSigned(movement, up) * slidingSign, true) * slidingSign;
+            let maxAngle = MathUtils.angleClamp(slidingMovement.vec3_angleSigned(movement.vec3_rotateAxis(90 * slidingSign, up, movement90), up) * slidingSign, true) * slidingSign;
+            let minAngle = MathUtils.angleClamp(slidingMovement.vec3_angleSigned(movement, up) * slidingSign, true) * slidingSign;
 
             if (checkOppositeDirection) {
                 maxAngle = currentAngle;
@@ -396,7 +397,7 @@ CollisionCheckHorizontalSliding.prototype._internalHorizontalSlide = function ()
 
             if (checkOppositeDirection && !previousHorizontalMovement.vec3_isZero(0.000001)) {
                 let angleWithPrevious = movement.vec3_angleSigned(previousHorizontalMovement, up);
-                if (Math.pp_sign(angleWithPrevious) == Math.pp_sign(maxAngle) && Math.abs(maxAngle) > Math.abs(angleWithPrevious)) {
+                if (MathUtils.sign(angleWithPrevious) == MathUtils.sign(maxAngle) && Math.abs(maxAngle) > Math.abs(angleWithPrevious)) {
                     currentAngle = angleWithPrevious;
                     //console.error("better angle", currentAngle, previousHorizontalMovement.vec_toString(10), movement.vec_toString(10));
                 }

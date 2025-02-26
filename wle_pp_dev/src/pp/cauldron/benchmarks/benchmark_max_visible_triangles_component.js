@@ -6,6 +6,7 @@ import { ObjectPool, ObjectPoolParams } from "../object_pool/object_pool.js";
 import { XRUtils } from "../utils/xr_utils.js";
 import { MeshCreationParams, MeshCreationTriangleParams, MeshCreationVertexParams, MeshUtils } from "../wl/utils/mesh_utils.js";
 import { ObjectCloneParams } from "../wl/utils/object_utils.js";
+import { MathUtils } from "../utils/math_utils.js";
 
 export class BenchmarkMaxVisibleTrianglesComponent extends Component {
     static TypeName = "pp-benchmark-max-visible-triangles";
@@ -98,7 +99,7 @@ export class BenchmarkMaxVisibleTrianglesComponent extends Component {
         poolParams.myCloneParams.myComponentDeepCloneParams.setDeepCloneComponentVariable(MeshComponent.TypeName, "material", this._myCloneMaterial);
         poolParams.myCloneParams.myComponentDeepCloneParams.setDeepCloneComponentVariable(MeshComponent.TypeName, "mesh", this._myCloneMesh);
 
-        this._myPoolID = this.type + "_" + Math.pp_randomUUID();
+        this._myPoolID = this.type + "_" + MathUtils.randomUUID();
         Globals.getObjectPoolManager(this.engine).addPool(this._myPoolID, new ObjectPool(this._myPlaneObject, poolParams));
 
         this._myBackgroundObject.pp_setActive(false);

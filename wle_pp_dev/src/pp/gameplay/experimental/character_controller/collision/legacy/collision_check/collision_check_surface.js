@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { RaycastHit } from "../../../../../../cauldron/physics/physics_raycast_params.js";
 import { quat2_create, vec3_create } from "../../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../../../pp/globals.js";
@@ -118,7 +119,7 @@ CollisionCheckSurface.prototype._postSurfaceCheck = function () {
     return function _postSurfaceCheck(fixedHorizontalMovement, originalVerticalMovement, transformUp, collisionCheckParams, collisionRuntimeParams, previousCollisionRuntimeParams) {
 
         let isVerticalMovementZero = originalVerticalMovement.vec3_isZero(0.00001);
-        let isVerticalMovemenDownward = Math.pp_sign(originalVerticalMovement.vec3_lengthSigned(transformUp), -1) < 0;
+        let isVerticalMovemenDownward = MathUtils.sign(originalVerticalMovement.vec3_lengthSigned(transformUp), -1) < 0;
 
         let horizontalMovementIsZero = fixedHorizontalMovement.vec3_isZero(0.00001);
         horizontalDirection = fixedHorizontalMovement.vec3_normalize(horizontalDirection);
@@ -296,8 +297,8 @@ CollisionCheckSurface.prototype._adjustVerticalMovementWithSurface = function ()
                 previousCollisionRuntimeParams.myGroundNormal,
                 horizontalDirection, up, true);
 
-            let groundExtraVerticalLength = horizontalMovement.vec3_length() * Math.tan(Math.pp_toRadians(Math.abs(groundPerceivedAngle)));
-            groundExtraVerticalLength *= Math.pp_sign(groundPerceivedAngle);
+            let groundExtraVerticalLength = horizontalMovement.vec3_length() * Math.tan(MathUtils.toRadians(Math.abs(groundPerceivedAngle)));
+            groundExtraVerticalLength *= MathUtils.sign(groundPerceivedAngle);
 
             if (Math.abs(groundExtraVerticalLength) > 0.00001) {
                 if (groundPerceivedAngle > 0) {
@@ -323,11 +324,11 @@ CollisionCheckSurface.prototype._adjustVerticalMovementWithSurface = function ()
                 previousCollisionRuntimeParams.myCeilingNormal,
                 horizontalDirection, up, false);
 
-            let ceilingExtraVerticalLength = horizontalMovement.vec3_length() * Math.tan(Math.pp_toRadians(Math.abs(ceilingPerceivedAngle)));
-            ceilingExtraVerticalLength *= Math.pp_sign(ceilingPerceivedAngle);
+            let ceilingExtraVerticalLength = horizontalMovement.vec3_length() * Math.tan(MathUtils.toRadians(Math.abs(ceilingPerceivedAngle)));
+            ceilingExtraVerticalLength *= MathUtils.sign(ceilingPerceivedAngle);
 
             if (Math.abs(ceilingExtraVerticalLength) > 0.00001) {
-                let sameSignThanGround = Math.pp_sign(extraVerticalLength) == Math.pp_sign(ceilingExtraVerticalLength);
+                let sameSignThanGround = MathUtils.sign(extraVerticalLength) == MathUtils.sign(ceilingExtraVerticalLength);
                 if (extraVerticalLength == 0 || (sameSignThanGround && Math.abs(ceilingExtraVerticalLength) > Math.abs(extraVerticalLength))) {
                     if (ceilingPerceivedAngle > 0) {
                         if (collisionCheckParams.myAdjustVerticalMovementWithCeilingAngleUphill &&
@@ -352,7 +353,7 @@ CollisionCheckSurface.prototype._adjustVerticalMovementWithSurface = function ()
 
         if (Math.abs(extraVerticalLength) > 0.00001) {
             let verticalMovementLength = verticalMovement.vec3_lengthSigned(up);
-            let sameSignThanExtra = Math.pp_sign(extraVerticalLength) == Math.pp_sign(verticalMovementLength);
+            let sameSignThanExtra = MathUtils.sign(extraVerticalLength) == MathUtils.sign(verticalMovementLength);
             extraVerticalMovement = up.vec3_scale(extraVerticalLength, extraVerticalMovement);
             if (verticalMovement.vec3_isZero(0.00001)) {
                 outAdjustedVerticalMovement.vec3_copy(extraVerticalMovement);
@@ -403,7 +404,7 @@ CollisionCheckSurface.prototype._adjustHorizontalMovementWithSurface = function 
             if (!groundHorizontalDirection.vec3_isZero(0.00001)) {
                 groundHorizontalDirection.vec3_normalize(groundHorizontalDirection);
 
-                let groundExtraHorizontalLength = verticalMovement.vec3_length() / Math.tan(Math.pp_toRadians(previousCollisionRuntimeParams.myGroundAngle));
+                let groundExtraHorizontalLength = verticalMovement.vec3_length() / Math.tan(MathUtils.toRadians(previousCollisionRuntimeParams.myGroundAngle));
                 groundExtraHorizontalLength *= (isMovementDownward) ? 1 : -1;
 
                 if (Math.abs(groundExtraHorizontalLength) > 0.00001) {
@@ -423,7 +424,7 @@ CollisionCheckSurface.prototype._adjustHorizontalMovementWithSurface = function 
             if (!ceilingHorizontalDirection.vec3_isZero(0.00001)) {
                 ceilingHorizontalDirection.vec3_normalize(ceilingHorizontalDirection);
 
-                let ceilingExtraHorizontalLength = verticalMovement.vec3_length() / Math.tan(Math.pp_toRadians(previousCollisionRuntimeParams.myCeilingAngle));
+                let ceilingExtraHorizontalLength = verticalMovement.vec3_length() / Math.tan(MathUtils.toRadians(previousCollisionRuntimeParams.myCeilingAngle));
                 ceilingExtraHorizontalLength *= (isMovementDownward) ? -1 : 1;
 
                 if (Math.abs(ceilingExtraHorizontalLength) > 0.00001) {
@@ -488,8 +489,8 @@ CollisionCheckSurface.prototype._computeExtraSurfaceVerticalMovement = function 
                     collisionRuntimeParams.myGroundNormal,
                     direction, up, true);
 
-                let extraVerticalLength = horizontalMovement.vec3_length() * Math.tan(Math.pp_toRadians(Math.abs(groundPerceivedAngle)));
-                extraVerticalLength *= Math.pp_sign(groundPerceivedAngle);
+                let extraVerticalLength = horizontalMovement.vec3_length() * Math.tan(MathUtils.toRadians(Math.abs(groundPerceivedAngle)));
+                extraVerticalLength *= MathUtils.sign(groundPerceivedAngle);
 
                 if (Math.abs(extraVerticalLength) > 0.00001 && (collisionCheckParams.mySnapOnGroundEnabled || extraVerticalLength > 0)) {
                     outExtraSurfaceVerticalMovement.vec3_add(up.vec3_scale(extraVerticalLength, tempVector), outExtraSurfaceVerticalMovement);
@@ -500,8 +501,8 @@ CollisionCheckSurface.prototype._computeExtraSurfaceVerticalMovement = function 
                     collisionRuntimeParams.myCeilingNormal,
                     direction, up, false);
 
-                let extraVerticalLength = horizontalMovement.vec3_length() * Math.tan(Math.pp_toRadians(Math.abs(ceilingPerceivedAngle)));
-                extraVerticalLength *= Math.pp_sign(ceilingPerceivedAngle);
+                let extraVerticalLength = horizontalMovement.vec3_length() * Math.tan(MathUtils.toRadians(Math.abs(ceilingPerceivedAngle)));
+                extraVerticalLength *= MathUtils.sign(ceilingPerceivedAngle);
                 extraVerticalLength *= -1;
 
                 if (Math.abs(extraVerticalLength) > 0.00001 && (collisionCheckParams.mySnapOnCeilingEnabled || extraVerticalLength < 0)) {
@@ -768,7 +769,7 @@ CollisionCheckSurface.prototype.computeSurfacePerceivedAngle = function () {
 
         if (Math.abs(surfacePerceivedAngle) >= surfaceAngle) {
             if (surfaceAngle != 0 && surfaceAngle != 180) {
-                surfacePerceivedAngle = surfaceAngle * Math.pp_sign(surfacePerceivedAngle);
+                surfacePerceivedAngle = surfaceAngle * MathUtils.sign(surfacePerceivedAngle);
             } else {
                 surfacePerceivedAngle = surfaceAngle;
             }

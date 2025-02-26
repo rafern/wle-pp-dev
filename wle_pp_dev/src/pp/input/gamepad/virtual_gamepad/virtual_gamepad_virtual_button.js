@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { Handedness } from "../../cauldron/input_types.js";
 import { VirtualGamepadIcon } from "./virtual_gamepad_icon.js";
 
@@ -160,11 +161,11 @@ export class VirtualGamepadVirtualButton {
 
         let angleStep = (buttonRingEndAngle - buttonRingStartAngle) / (buttonsAmount - 1);
 
-        let currentAngle = Math.pp_angleClamp(buttonRingStartAngle + angleStep * virtualButtonIndex);
+        let currentAngle = MathUtils.angleClamp(buttonRingStartAngle + angleStep * virtualButtonIndex);
 
         if (virtualButtonHandedness == Handedness.RIGHT) {
             currentAngle = 270 + (270 - currentAngle);
-            currentAngle = Math.pp_angleClamp(currentAngle, true);
+            currentAngle = MathUtils.angleClamp(currentAngle, true);
         }
 
         let counterAngle = 360 - currentAngle;

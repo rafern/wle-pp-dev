@@ -1,5 +1,5 @@
 import { Component } from "@wonderlandengine/api";
-import { ComponentUtils, EasingFunction, Timer, vec3_create } from "wle-pp";
+import { ComponentUtils, EasingFunction, MathUtils, Timer, vec3_create } from "wle-pp";
 
 export class ParticleComponent extends Component {
     static TypeName = "particle";
@@ -9,19 +9,19 @@ export class ParticleComponent extends Component {
     }
 
     start() {
-        let randomScale = Math.pp_random(0.5, 1);
+        let randomScale = MathUtils.random(0.5, 1);
         this._myTargetScale = vec3_create(randomScale, randomScale, randomScale);
 
         this.object.pp_setScale(Math.PP_EPSILON);
-        this.object.pp_rotate(vec3_create(Math.pp_random(-180, 180), Math.pp_random(-180, 180), Math.pp_random(-180, 180)));
+        this.object.pp_rotate(vec3_create(MathUtils.random(-180, 180), MathUtils.random(-180, 180), MathUtils.random(-180, 180)));
 
-        this._mySpawnTimer = new Timer(Math.pp_random(0.1, 0.2));
-        this._myLifeTimer = new Timer(Math.pp_random(0.35, 0.7), false);
-        this._myUnspawnTimer = new Timer(Math.pp_random(0.1, 0.2), false);
+        this._mySpawnTimer = new Timer(MathUtils.random(0.1, 0.2));
+        this._myLifeTimer = new Timer(MathUtils.random(0.35, 0.7), false);
+        this._myUnspawnTimer = new Timer(MathUtils.random(0.1, 0.2), false);
 
-        this._myHorizontalSpeed = vec3_create(0, 0, 1).vec3_rotateAxis(Math.pp_random(-180, 180), vec3_create(0, 1, 0));
-        this._myHorizontalSpeed.vec3_scale(Math.pp_random(2, 10));
-        this._myVerticalSpeed = vec3_create(0, 1, 0).vec3_scale(Math.pp_random(2, 4));
+        this._myHorizontalSpeed = vec3_create(0, 0, 1).vec3_rotateAxis(MathUtils.random(-180, 180), vec3_create(0, 1, 0));
+        this._myHorizontalSpeed.vec3_scale(MathUtils.random(2, 10));
+        this._myVerticalSpeed = vec3_create(0, 1, 0).vec3_scale(MathUtils.random(2, 4));
     }
 
     update(dt) {

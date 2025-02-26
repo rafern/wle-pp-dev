@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { GamepadAxesID } from "../../../../input/gamepad/gamepad_buttons.js";
 import { mat4_create, vec3_create } from "../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../pp/globals.js";
@@ -565,7 +566,7 @@ export class EasyTuneTransformWidget extends EasyTuneBaseWidget {
     }
 
     _changeStep(index, step) {
-        step = Math.pp_roundDecimal(step, 10);
+        step = MathUtils.roundDecimal(step, 10);
 
         switch (index) {
             case 0:

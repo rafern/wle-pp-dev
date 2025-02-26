@@ -5,6 +5,7 @@ import { Quat2Utils } from "../../../../../cauldron/utils/array/quat2_utils.js";
 import { XRUtils } from "../../../../../cauldron/utils/xr_utils.js";
 import { mat4_create, quat2_create, quat_create, vec3_create, vec4_create } from "../../../../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../../../../pp/globals.js";
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 
 export enum NonVRReferenceSpaceMode {
     NO_FLOOR = 0,
@@ -1196,9 +1197,9 @@ export class PlayerHeadManager {
                         maxVerticalAngle = 0;
                     }
 
-                    const angleWithUp = Math.pp_angleClamp(resyncHeadUp.vec3_angleSigned(playerUp, resyncHeadRight));
+                    const angleWithUp = MathUtils.angleClamp(resyncHeadUp.vec3_angleSigned(playerUp, resyncHeadRight));
                     if (Math.abs(angleWithUp) > maxVerticalAngle) {
-                        const fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * Math.pp_sign(angleWithUp);
+                        const fixAngle = (Math.abs(angleWithUp) - maxVerticalAngle) * MathUtils.sign(angleWithUp);
                         resyncHeadRotation.quat_rotateAxis(fixAngle, resyncHeadRight, resyncHeadRotation);
                     }
                 }

@@ -2,6 +2,7 @@ import { Component, Property } from "@wonderlandengine/api";
 import { Timer } from "../../pp/cauldron/cauldron/timer.js";
 import { FSM } from "../../pp/cauldron/fsm/fsm.js";
 import { TimerState } from "../../pp/cauldron/fsm/states/condition_states/timer_state.js";
+import { MathUtils } from "wle-pp";
 
 export class MovingPhysXTestComponent extends Component {
     static TypeName = "moving-physx-test";
@@ -73,14 +74,14 @@ export class MovingPhysXTestComponent extends Component {
 
                 if (this._myPhysXType == 0) {
                     let translateAmount = 0.5;
-                    this.object.pp_translate([Math.pp_random(-translateAmount, translateAmount), Math.pp_random(-translateAmount, translateAmount), Math.pp_random(-translateAmount, translateAmount)]);
+                    this.object.pp_translate([MathUtils.random(-translateAmount, translateAmount), MathUtils.random(-translateAmount, translateAmount), MathUtils.random(-translateAmount, translateAmount)]);
                 } else {
                     if (this._myForceType == 1) {
                         let linearVelocity = 5;
-                        this._myPhysX.linearVelocity = [Math.pp_random(-linearVelocity, linearVelocity), Math.pp_random(linearVelocity, linearVelocity * 3), Math.pp_random(-linearVelocity, linearVelocity)];
+                        this._myPhysX.linearVelocity = [MathUtils.random(-linearVelocity, linearVelocity), MathUtils.random(linearVelocity, linearVelocity * 3), MathUtils.random(-linearVelocity, linearVelocity)];
                     } else {
                         let force = 500;
-                        this._myPhysX.addForce([Math.pp_random(-force, force), Math.pp_random(force, force * 3), Math.pp_random(-force, force)]);
+                        this._myPhysX.addForce([MathUtils.random(-force, force), MathUtils.random(force, force * 3), MathUtils.random(-force, force)]);
                     }
                 }
 
@@ -111,14 +112,14 @@ export class MovingPhysXTestComponent extends Component {
     _move() {
         if (this._myPhysXType == 0) {
             let translateAmount = 0.5;
-            this.object.pp_translate([Math.pp_random(-translateAmount, translateAmount), Math.pp_random(-translateAmount, translateAmount), Math.pp_random(-translateAmount, translateAmount)]);
+            this.object.pp_translate([MathUtils.random(-translateAmount, translateAmount), MathUtils.random(-translateAmount, translateAmount), MathUtils.random(-translateAmount, translateAmount)]);
         } else {
             if (this._myForceType == 1) {
                 let linearVelocity = 5;
-                this._myPhysX.linearVelocity = [Math.pp_random(-linearVelocity, linearVelocity), Math.pp_random(linearVelocity, linearVelocity * 3), Math.pp_random(-linearVelocity, linearVelocity)];
+                this._myPhysX.linearVelocity = [MathUtils.random(-linearVelocity, linearVelocity), MathUtils.random(linearVelocity, linearVelocity * 3), MathUtils.random(-linearVelocity, linearVelocity)];
             } else {
                 let force = 500;
-                this._myPhysX.addForce([Math.pp_random(-force, force), Math.pp_random(force, force * 3), Math.pp_random(-force, force)]);
+                this._myPhysX.addForce([MathUtils.random(-force, force), MathUtils.random(force, force * 3), MathUtils.random(-force, force)]);
             }
         }
     }

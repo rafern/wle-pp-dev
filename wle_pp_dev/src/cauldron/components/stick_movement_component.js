@@ -9,6 +9,7 @@ import { CollisionCheckParams, CollisionRuntimeParams } from "../../pp/gameplay/
 import { GamepadAxesID, GamepadButtonID } from "../../pp/input/gamepad/gamepad_buttons.js";
 import { vec3_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/pp/globals.js";
+import { MathUtils } from "wle-pp";
 
 export class StickMovementComponent extends Component {
     static TypeName = "stick-movement";
@@ -134,7 +135,7 @@ export class StickMovementComponent extends Component {
                 this._myIsFlying = this._myIsFlying || movementDirection.vec3_componentAlongAxis(up).vec3_length() > 0.0001;
 
                 let movementIntensity = axes.vec2_length();
-                let speed = Math.pp_lerp(0, this._mySpeed, movementIntensity);
+                let speed = MathUtils.lerp(0, this._mySpeed, movementIntensity);
                 movementDirection.vec3_scale(speed * this._myScale * dt, movement);
             }
         } else {

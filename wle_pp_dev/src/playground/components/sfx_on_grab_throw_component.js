@@ -1,5 +1,5 @@
 import { Component } from "@wonderlandengine/api";
-import { Globals, GrabberHandComponent } from "wle-pp";
+import { Globals, GrabberHandComponent, MathUtils } from "wle-pp";
 
 export class SFXOnGrabThrowComponent extends Component {
     static TypeName = "sfx-on-grab-throw";
@@ -25,7 +25,7 @@ export class SFXOnGrabThrowComponent extends Component {
 
     _onGrab(grabber, grabbable) {
         this._myGrabSFX.setPosition(grabber.object.pp_getPosition());
-        this._myGrabSFX.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+        this._myGrabSFX.setPitch(MathUtils.random(1.25 - 0.15, 1.25 + 0.05));
         this._myGrabSFX.play();
 
         let intensity = 0.25;
@@ -37,7 +37,7 @@ export class SFXOnGrabThrowComponent extends Component {
 
     _onThrow(grabber, grabbable) {
         this._myThrowSFX.setPosition(grabber.object.pp_getPosition());
-        this._myThrowSFX.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+        this._myThrowSFX.setPitch(MathUtils.random(1.25 - 0.15, 1.25 + 0.05));
         this._myThrowSFX.play();
 
         let intensity = 0.15;

@@ -1,5 +1,5 @@
 import { Component, PhysXComponent } from "@wonderlandengine/api";
-import { ComponentUtils, Globals, GrabbableComponent, PhysicsCollisionCollector } from "wle-pp";
+import { ComponentUtils, Globals, GrabbableComponent, MathUtils, PhysicsCollisionCollector } from "wle-pp";
 
 export class SFXOnCollisionComponent extends Component {
     static TypeName = "sfx-on-collision";
@@ -30,7 +30,7 @@ export class SFXOnCollisionComponent extends Component {
 
         if (this._myCollisionsCollector.getCollisionsStarted().length > 0 && this._myLastLastGrabbed == this._myGrabbable.isGrabbed()) {
             this._mySFX.setPosition(this.object.pp_getPosition());
-            this._mySFX.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+            this._mySFX.setPitch(MathUtils.random(1.25 - 0.15, 1.25 + 0.05));
             this._mySFX.play();
         }
 

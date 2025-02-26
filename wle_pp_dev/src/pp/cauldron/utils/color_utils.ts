@@ -1,5 +1,6 @@
 import { Vector4 } from "../type_definitions/array_type_definitions.js";
 import { Vec4Utils } from "./array/vec4_utils.js";
+import { MathUtils } from "./math_utils.js";
 
 export enum ColorModel {
     RGB,
@@ -110,7 +111,7 @@ export function colorNormalizedToInt<T extends Vector4>(color: Readonly<Vector4>
 export function colorNormalizedToInt<T extends Vector4, U extends Vector4>(color: Readonly<T>, out: T | U = Vec4Utils.clone(color)): T | U {
     for (let i = 0; i < out.length; i++) {
         out[i] = Math.round(color[i] * 255);
-        out[i] = Math.pp_clamp(out[i], 0, 255);
+        out[i] = MathUtils.clamp(out[i], 0, 255);
     }
 
     return out;
@@ -121,7 +122,7 @@ export function colorIntToNormalized<T extends Vector4>(color: Readonly<Vector4>
 export function colorIntToNormalized<T extends Vector4, U extends Vector4>(color: Readonly<T>, out: T | U = Vec4Utils.clone(color)): T | U {
     for (let i = 0; i < out.length; i++) {
         out[i] = color[i] / 255;
-        out[i] = Math.pp_clamp(out[i], 0, 1);
+        out[i] = MathUtils.clamp(out[i], 0, 1);
     }
 
     return out;

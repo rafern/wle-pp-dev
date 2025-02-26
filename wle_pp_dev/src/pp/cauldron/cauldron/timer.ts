@@ -120,12 +120,12 @@ export class Timer {
         if (this._myTimeLeft > 0 && this._myDuration > 0) {
             percentage = (this._myDuration - this._myTimeLeft) / this._myDuration;
         }
-        return Math.pp_clamp(percentage, 0, 1);
+        return MathUtils.clamp(percentage, 0, 1);
     }
 
     public setPercentage(percentage: number): void {
         if (this.isRunning()) {
-            const durationPercentage = Math.pp_clamp(1 - percentage, 0, 1);
+            const durationPercentage = MathUtils.clamp(1 - percentage, 0, 1);
             this._myTimeLeft = this._myDuration * durationPercentage;
         }
     }

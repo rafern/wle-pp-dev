@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { FSM, SkipStateFunction } from "../../../../../../cauldron/fsm/fsm.js";
 import { XRUtils } from "../../../../../../cauldron/utils/xr_utils.js";
 import { Handedness } from "../../../../../../input/cauldron/input_types.js";
@@ -272,7 +273,7 @@ PlayerLocomotionTeleport.prototype._applyGravity = function () {
             this._myLocomotionRuntimeParams.myGravitySpeed += this._myTeleportParams.myGravityAcceleration * dt;
 
             if (Math.abs(this._myLocomotionRuntimeParams.myGravitySpeed) > Math.abs(this._myTeleportParams.myMaxGravitySpeed)) {
-                this._myLocomotionRuntimeParams.myGravitySpeed = Math.pp_sign(this._myTeleportParams.myGravityAcceleration) * Math.abs(this._myTeleportParams.myMaxGravitySpeed);
+                this._myLocomotionRuntimeParams.myGravitySpeed = MathUtils.sign(this._myTeleportParams.myGravityAcceleration) * Math.abs(this._myTeleportParams.myMaxGravitySpeed);
             }
 
             gravityMovement = playerUp.vec3_scale(this._myLocomotionRuntimeParams.myGravitySpeed * dt, gravityMovement);

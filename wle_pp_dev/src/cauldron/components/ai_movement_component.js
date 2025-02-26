@@ -5,6 +5,7 @@ import { ComponentUtils } from "../../pp/cauldron/wl/utils/component_utils.js";
 import { CollisionCheckBridge } from "../../pp/gameplay/experimental/character_controller/collision/collision_check_bridge.js";
 import { CollisionCheckParams, CollisionRuntimeParams } from "../../pp/gameplay/experimental/character_controller/collision/legacy/collision_check/collision_params.js";
 import { quat2_create, vec3_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
+import { MathUtils } from "wle-pp";
 
 export class AIMovementComponent extends Component {
     static TypeName = "ai-movement";
@@ -26,7 +27,7 @@ export class AIMovementComponent extends Component {
         this._myCollisionTimer = new Timer(1);
         this._myCollisionTimer.end();
 
-        this._mySpeed = Math.pp_random(this._myMinSpeed, this._myMaxSpeed);
+        this._mySpeed = MathUtils.random(this._myMinSpeed, this._myMaxSpeed);
 
         this._myCollisionCheckParams = null;
         this._myCollisionRuntimeParams = new CollisionRuntimeParams();
@@ -214,12 +215,12 @@ AIMovementComponent.prototype._changeDirection = function () {
         let up = this.object.pp_getUp(tempUp);
 
         if (!goOpposite) {
-            this._myCurrentDirection.vec3_rotateAxis(Math.pp_random(-180, 180), up, this._myCurrentDirection);
+            this._myCurrentDirection.vec3_rotateAxis(MathUtils.random(-180, 180), up, this._myCurrentDirection);
         } else {
             this._myCurrentDirection.vec3_rotateAxis(180, up, this._myCurrentDirection);
-            this._myCurrentDirection.vec3_rotateAxis(Math.pp_random(-90, 90), up, this._myCurrentDirection);
+            this._myCurrentDirection.vec3_rotateAxis(MathUtils.random(-90, 90), up, this._myCurrentDirection);
         }
 
-        this._myChangeDirectionTimer.start(Math.pp_random(this._myMinDirectionTime, this._myMaxDirectionTime));
+        this._myChangeDirectionTimer.start(MathUtils.random(this._myMinDirectionTime, this._myMaxDirectionTime));
     };
 }();

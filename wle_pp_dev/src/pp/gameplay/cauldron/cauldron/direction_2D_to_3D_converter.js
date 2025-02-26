@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { quat_create, vec3_create } from "../../../plugin/js/extensions/array/vec_create_extension.js";
 
 export class Direction2DTo3DConverterParams {
@@ -199,7 +200,7 @@ Direction2DTo3DConverter.prototype.convertRotationQuat = function () {
                 if (this._myLastConvertRotationQuatValid) {
                     rotationToNewConvertPivoted = this._myLastConvertRotationQuat.quat_rotationToQuat(conversionRotationQuat, rotationToNewConvertPivoted).
                         quat_rotationAroundAxisQuat(direction3DUp, rotationToNewConvertPivoted);
-                    if (Math.pp_angleClamp(rotationToNewConvertPivoted.quat_getAngle(), true) > Math.PP_EPSILON_DEGREES) {
+                    if (MathUtils.angleClamp(rotationToNewConvertPivoted.quat_getAngle(), true) > Math.PP_EPSILON_DEGREES) {
                         if (this._myParams.myAdjustLastValidFlatForwardOverConversionReferenceRotation) {
                             this._myLastValidFlatForward.vec3_rotateQuat(rotationToNewConvertPivoted, this._myLastValidFlatForward);
                         }

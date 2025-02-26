@@ -1,3 +1,4 @@
+import { MathUtils } from "wle-pp/cauldron/utils/math_utils.js";
 import { GamepadAxesID } from "../../../../input/gamepad/gamepad_buttons.js";
 import { Globals } from "../../../../pp/globals.js";
 import { EasyTuneBaseWidget } from "../base/easy_tune_base_widget.js";
@@ -99,7 +100,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
                 this._myValueRealValue += amountToAdd;
 
                 if (this._myVariable._myMin != null && this._myVariable._myMax != null) {
-                    this._myValueRealValue = Math.pp_clamp(this._myValueRealValue, this._myVariable._myMin, this._myVariable._myMax);
+                    this._myValueRealValue = MathUtils.clamp(this._myValueRealValue, this._myVariable._myMin, this._myVariable._myMax);
                 } else if (this._myVariable._myMin != null) {
                     this._myValueRealValue = Math.max(this._myValueRealValue, this._myVariable._myMin);
                 } else if (this._myVariable._myMax != null) {
@@ -118,7 +119,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
                         this._myTempValue[i] = Math.round((this._myTempValue[i] + difference) * decimalPlacesMultiplier + Number.EPSILON) / decimalPlacesMultiplier;
 
                         if (this._myVariable._myMin != null && this._myVariable._myMax != null) {
-                            this._myTempValue[i] = Math.pp_clamp(this._myTempValue[i], this._myVariable._myMin, this._myVariable._myMax);
+                            this._myTempValue[i] = MathUtils.clamp(this._myTempValue[i], this._myVariable._myMin, this._myVariable._myMax);
                         } else if (this._myVariable._myMin != null) {
                             this._myTempValue[i] = Math.max(this._myTempValue[i], this._myVariable._myMin);
                         } else if (this._myVariable._myMax != null) {
@@ -132,7 +133,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
                     this._myTempValue[this._myValueEditIndex] = Math.round(this._myValueRealValue * decimalPlacesMultiplier + Number.EPSILON) / decimalPlacesMultiplier;
 
                     if (this._myVariable._myMin != null && this._myVariable._myMax != null) {
-                        this._myTempValue[this._myValueEditIndex] = Math.pp_clamp(this._myTempValue[this._myValueEditIndex], this._myVariable._myMin, this._myVariable._myMax);
+                        this._myTempValue[this._myValueEditIndex] = MathUtils.clamp(this._myTempValue[this._myValueEditIndex], this._myVariable._myMin, this._myVariable._myMax);
                     } else if (this._myVariable._myMin != null) {
                         this._myTempValue[this._myValueEditIndex] = Math.max(this._myTempValue[this._myValueEditIndex], this._myVariable._myMin);
                     } else if (this._myVariable._myMax != null) {
@@ -317,7 +318,7 @@ export class EasyTuneNumberArrayWidget extends EasyTuneBaseWidget {
     }
 
     _changeStep(step) {
-        step = Math.pp_roundDecimal(step, 10);
+        step = MathUtils.roundDecimal(step, 10);
         this._myVariable._myStepPerSecond = step;
         this._myUI.myStepTextComponent.text = this._myConfig.myStepStartString.concat(this._myVariable._myStepPerSecond);
     }
