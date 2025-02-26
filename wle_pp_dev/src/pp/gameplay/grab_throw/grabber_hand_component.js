@@ -7,6 +7,7 @@ import { GamepadButtonID } from "../../input/gamepad/gamepad_buttons.js";
 import { vec3_create, vec4_create } from "../../plugin/js/extensions/array/vec_create_extension.js";
 import { Globals } from "../../pp/globals.js";
 import { GrabbableComponent } from "./grabbable_component.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class GrabberHandComponent extends Component {
     static TypeName = "pp-grabber-hand";
@@ -341,7 +342,7 @@ export class GrabberHandComponent extends Component {
             let lastDirectionIndex = j - this._myLinearVelocityHistoryDirectionAverageSkipFromStart;
             let direction = vec3_create();
             for (let i = this._myLinearVelocityHistoryDirectionAverageSkipFromStart; i < lastDirectionIndex; i++) {
-                let currentDirection = linearVelocityHistory[i].pp_clone();
+                let currentDirection = ArrayUtils.clone(linearVelocityHistory[i]);
                 currentDirection.vec3_scale(directionCurrentWeight, currentDirection);
                 direction.vec3_add(currentDirection, direction);
 

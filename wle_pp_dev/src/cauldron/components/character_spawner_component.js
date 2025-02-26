@@ -1,6 +1,7 @@
 import { Component, Property } from "@wonderlandengine/api";
 import { vec3_create } from "../../pp/plugin/js/extensions/array/vec_create_extension.js";
 import { MathUtils } from "../../pp/cauldron/utils/math_utils.js";
+import { ObjectUtils } from "wle-pp";
 
 export class CharacterSpawnerComponent extends Component {
     static TypeName = "character-spawner";
@@ -22,9 +23,9 @@ export class CharacterSpawnerComponent extends Component {
             let character = null;
 
             if (spawnTall) {
-                character = this._myTallPrototype.pp_clone();
+                character = ObjectUtils.clone(this._myTallPrototype);
             } else {
-                character = this._myShortPrototype.pp_clone();
+                character = ObjectUtils.clone(this._myShortPrototype);
             }
 
             character.pp_setParent(this._myRootObject);

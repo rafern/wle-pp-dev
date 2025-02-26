@@ -2,6 +2,7 @@ import { Alignment, Collider, VerticalAlignment } from "@wonderlandengine/api";
 import { vec3_create, vec4_create } from "../../plugin/js/extensions/array/vec_create_extension.js";
 import { ToolHandedness } from "../cauldron/tool_types.js";
 import { ConsoleVRWidgetMessageType } from "./console_vr_types.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export class ConsoleVRWidgetConfig {
 
@@ -73,7 +74,7 @@ export class ConsoleVRWidgetConfig {
 
         this.myButtonsCollisionCollider = this.myCursorTargetCollisionCollider;
         this.myButtonsCollisionGroup = this.myCursorTargetCollisionGroup;
-        this.myButtonsCollisionExtents = this.myButtonBackgroundScale.pp_clone();
+        this.myButtonsCollisionExtents = ArrayUtils.clone(this.myButtonBackgroundScale);
         this.myButtonsCollisionExtents[2] = this.myCursorTargetCollisionThickness;
 
         this.myClearButtonTextLabel = "clear";
@@ -129,7 +130,7 @@ export class ConsoleVRWidgetConfig {
         this.myNotifyIconCursorTargetPosition = vec3_create(0, 0, 0);
         this.myNotifyIconCursorTargetPosition[2] = this.myButtonsPanelPosition[2] + this.myButtonTextPosition[2] - this.myMessagesTextsPanelPosition[2]; // A little behind the button target to avoid hiding it
 
-        this.myNotifyIconCollisionExtents = this.myNotifyIconBackgroundScale.pp_clone();
+        this.myNotifyIconCollisionExtents = ArrayUtils.clone(this.myNotifyIconBackgroundScale);
         this.myNotifyIconCollisionExtents[2] = this.myCursorTargetCollisionThickness;
 
         this.myNotifyIconColor = vec4_create(210 / 255, 210 / 255, 210 / 255, 1);

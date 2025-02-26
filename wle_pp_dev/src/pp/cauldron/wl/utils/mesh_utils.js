@@ -107,7 +107,7 @@ export let clone = function () {
             return null;
         }
 
-        let clonedIndexData = mesh.indexData.pp_clone();
+        let clonedIndexData = ArrayUtils.clone(mesh.indexData);
 
         let clonedMesh = mesh.engine.meshes.create({
             vertexCount: mesh.vertexCount,

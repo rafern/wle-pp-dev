@@ -1,5 +1,5 @@
 import { Component, MeshComponent, Property } from "@wonderlandengine/api";
-import { Globals, MathUtils, ObjectCloneParams, ObjectPool, ObjectPoolParams } from "wle-pp";
+import { Globals, MathUtils, ObjectCloneParams, ObjectPool, ObjectPoolParams, ObjectUtils } from "wle-pp";
 import { ParticleComponent } from "./particle_component.js";
 
 export class ParticlesSpawnerComponent extends Component {
@@ -29,7 +29,7 @@ export class ParticlesSpawnerComponent extends Component {
         cloneParams.myComponentsToInclude.push(MeshComponent.TypeName);
 
         for (let i = 0; i < this._myParticles.length; i++) {
-            let particle = this._myParticles[i].pp_clone(cloneParams);
+            let particle = ObjectUtils.clone(this._myParticles[i], cloneParams);
             particle.pp_addComponent(ParticleComponent);
             particle.pp_setActive(false);
             particle.pp_setParent(Globals.getSceneObjects(this.engine).myParticles);

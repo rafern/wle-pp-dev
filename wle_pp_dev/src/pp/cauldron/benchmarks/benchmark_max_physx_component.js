@@ -6,6 +6,7 @@ import { PhysicsCollisionCollector } from "../physics/physics_collision_collecto
 import { RaycastParams, RaycastResults } from "../physics/physics_raycast_params.js";
 import { PhysicsUtils } from "../physics/physics_utils.js";
 import { MathUtils } from "../utils/math_utils.js";
+import { ArrayUtils } from "../utils/array/array_utils.js";
 
 // Adjust the gravity to a low value like -0.05 to have better results, since the dynamic objects will move slowly instead of quickly falling far away
 export class BenchmarkMaxPhysXComponent extends Component {
@@ -245,7 +246,7 @@ export class BenchmarkMaxPhysXComponent extends Component {
                     let distance = Math.random() * (maxDistance - minDistance) + minDistance;
                     let extraAxisRotation = (Math.random() * 2 - 1) * (maxExtraRotation - minExtraRotation) + minExtraRotation;
                     let extraUpRotation = (Math.random() * 2 - 1) * (maxExtraRotation - minExtraRotation) + minExtraRotation;
-                    let physXDirection = verticalDirection.pp_clone();
+                    let physXDirection = ArrayUtils.clone(verticalDirection);
 
                     physXDirection.vec3_rotateAxisRadians(extraAxisRotation, rotationAxis, physXDirection);
                     physXDirection.vec3_rotateAxisRadians(extraUpRotation, upDirection, physXDirection);
@@ -261,7 +262,7 @@ export class BenchmarkMaxPhysXComponent extends Component {
                     let distance = Math.random() * (maxDistance - minDistance) + minDistance;
                     let extraAxisRotation = (Math.random() * 2 - 1) * (maxExtraRotation - minExtraRotation) + minExtraRotation;
                     let extraUpRotation = (Math.random() * 2 - 1) * (maxExtraRotation - minExtraRotation) + minExtraRotation;
-                    let physXDirection = verticalDirection.pp_clone();
+                    let physXDirection = ArrayUtils.clone(verticalDirection);
 
                     physXDirection.vec3_rotateAxisRadians(extraAxisRotation, rotationAxis, physXDirection);
                     physXDirection.vec3_rotateAxisRadians(extraUpRotation, upDirection, physXDirection);

@@ -6,6 +6,7 @@ import { vec4_create } from "../../../plugin/js/extensions/array/vec_create_exte
 import { Globals } from "../../../pp/globals.js";
 import { EasyTuneIntArray } from "../easy_tune_variable_types.js";
 import { EasyObjectTuner } from "./easy_object_tuner.js";
+import { ArrayUtils } from "wle-pp/cauldron/utils/array/array_utils.js";
 
 export enum EasyMeshColorColorType {
     COLOR,
@@ -58,7 +59,9 @@ export class EasyMeshColor extends EasyObjectTuner<Vector4, EasyTuneIntArray> {
 
         const meshMaterial: Record<string, Vector4> = this._getMeshMaterial(object) as unknown as Record<string, Vector4>;
         if (meshMaterial != null) {
-            color = meshMaterial[EasyMeshColor._myColorVariableNames[this._myColorType]].pp_clone();
+            // FIXME ArrayLike type inference is not good. needs to be fixed
+            //       before continuing conversion to ArrayUtils
+            color = ArrayUtils.clone(meshMaterial[EasyMeshColor._myColorVariableNames[this._myColorType]]);
 
             if (this._myColorModel == ColorModel.RGB) {
                 color = ColorUtils.colorNormalizedToInt(color);

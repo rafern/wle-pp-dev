@@ -3,6 +3,7 @@
 import { Emitter } from "@wonderlandengine/api";
 import { State } from "./state.js";
 import { Transition } from "./transition.js";
+import { ArrayUtils } from "../utils/array/array_utils.js";
 
 export class StateData {
     public myID: unknown;
@@ -482,7 +483,7 @@ export class FSM {
 
         cloneFSM._myPerformMode = this._myPerformMode;
         cloneFSM._myPerformDelayedMode = this._myPerformDelayedMode;
-        (cloneFSM._myPendingPerforms as PendingPerform[]) = this._myPendingPerforms.pp_clone();
+        (cloneFSM._myPendingPerforms as PendingPerform[]) = ArrayUtils.clone(this._myPendingPerforms);
 
         for (const stateData of this._myStatesData.values()) {
             let clonedStateData = null;

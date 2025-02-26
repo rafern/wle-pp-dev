@@ -1,5 +1,5 @@
 import { Component } from "@wonderlandengine/api";
-import { EasyTuneNumber, Globals, MathUtils, Timer } from "wle-pp";
+import { ArrayUtils, EasyTuneNumber, Globals, MathUtils, Timer } from "wle-pp";
 
 export class WaveMovementComponent extends Component {
     static TypeName = "wave-movement";
@@ -22,8 +22,8 @@ export class WaveMovementComponent extends Component {
         this._myMaxDistanceMiddles = [3, 1, 0.5];
         this._myMaxDistances = [this._randomMaxDistance(this._myMaxDistanceMiddles[0]), this._randomMaxDistance(this._myMaxDistanceMiddles[1]), this._randomMaxDistance(this._myMaxDistanceMiddles[2])];
 
-        this._myMaxDistanceTargets = this._myMaxDistances.pp_clone();
-        this._mySpeedMultiplierTargets = this._mySpeedMultipliers.pp_clone();
+        this._myMaxDistanceTargets = ArrayUtils.clone(this._myMaxDistances);
+        this._mySpeedMultiplierTargets = ArrayUtils.clone(this._mySpeedMultipliers);
 
         this._myRandomSigns = [MathUtils.randomPick(-1, 1), MathUtils.randomPick(-1, 1), MathUtils.randomPick(-1, 1)];
 
