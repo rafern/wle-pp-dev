@@ -1,4 +1,41 @@
-import { ArrayLike, DynamicArrayLike } from "../../type_definitions/array_type_definitions.js";
+import { ArrayLike, DynamicArrayLike, Vector4 } from "../../type_definitions/array_type_definitions.js";
+
+/**
+ * Maps a type to another type.
+ *
+ * @template {any} T - The input type.
+ * @template {any} R - The type relation map. A type which has indices of pair, where each pair has the type [T, V], where T is the input type, and V is the output type.
+ */
+type MappedType<T, R> = {
+    [k in keyof R]:
+        R[k] extends [T, infer P] ? P : never
+}[keyof R];
+
+interface ReadonlyTypeRegistry {
+    i8: [ Readonly<Int8Array>, Int8Array ],
+    u8: [ Readonly<Uint8Array>, Uint8Array ],
+    uc8: [ Readonly<Uint8ClampedArray>, Uint8ClampedArray ],
+    i16: [ Readonly<Int16Array>, Int16Array ],
+    u16: [ Readonly<Uint16Array>, Uint16Array ],
+    i32: [ Readonly<Int32Array>, Int32Array ],
+    u32: [ Readonly<Uint32Array>, Uint32Array ],
+    f32: [ Readonly<Float32Array>, Float32Array ],
+    f64: [ Readonly<Float64Array>, Float64Array ],
+    vec4: [ Readonly<Vector4>, Vector4 ],
+}
+
+// type RegisteredReadonlyValues<R> = {
+//     [k in keyof R]:
+//         R[k] extends [any, infer V] ? V : never
+// }[keyof R];
+
+type RegisteredReadonlyKeys<R> = {
+    [k in keyof R]:
+        R[k] extends [infer K, any] ? K : never
+}[keyof R];
+
+type SupportedArrayLikeReadonlyTypes = RegisteredReadonlyKeys<ReadonlyTypeRegistry>;
+// type SupportedArrayLikeTypes = RegisteredReadonlyValues<ReadonlyTypeRegistry>;
 
 export function copy<ArrayType extends ArrayLike<T>, T>(from: Readonly<ArrayLike<T>>, to: ArrayType, copyCallback?: (fromElement: T, toElement: T) => T): ArrayType {
     const _to = to as (ArrayType & { pop: () => T | undefined });
@@ -21,9 +58,8 @@ export function copy<ArrayType extends ArrayLike<T>, T>(from: Readonly<ArrayLike
 
 /** The overload where `ArrayType extends ArrayLike<number>` does also get `array` as `Readonly<ArrayType>`, but is not marked as such due to 
     Typescript having issues with inferring the proper type of `ArrayType` when `Readonly` */
-export function clone<ArrayType extends ArrayLike<T>, T>(array: Readonly<ArrayType>, cloneCallback?: (elementToClone: T) => T): ArrayType;
-export function clone<T>(array: Readonly<T[]>, cloneCallback?: (elementToClone: T) => T): T[];
-export function clone<ArrayType extends ArrayLike<number>>(array: ArrayType, cloneCallback?: (elementToClone: number) => number): ArrayType;
+export function clone<T>(array: ReadonlyArray<T>, cloneCallback?: (elementToClone: T) => T): Array<T>;
+export function clone<T extends SupportedArrayLikeReadonlyTypes>(array: T, cloneCallback?: (elementToClone: number) => number): MappedType<T, ReadonlyTypeRegistry>;
 export function clone<ArrayType extends ArrayLike<T>, T>(array: Readonly<ArrayType>, cloneCallback?: (elementToClone: T) => T): ArrayType {
     const clonedArray = array.slice(0) as ArrayType;
 
