@@ -59,9 +59,7 @@ export class EasyMeshColor extends EasyObjectTuner<Vector4, EasyTuneIntArray> {
 
         const meshMaterial: Record<string, Vector4> = this._getMeshMaterial(object) as unknown as Record<string, Vector4>;
         if (meshMaterial != null) {
-            // FIXME ArrayLike type inference is not good. needs to be fixed
-            //       before continuing conversion to ArrayUtils
-            color = ArrayUtils.clone(meshMaterial[EasyMeshColor._myColorVariableNames[this._myColorType]]);
+            color = ArrayUtils.clone<Vector4>(meshMaterial[EasyMeshColor._myColorVariableNames[this._myColorType]]);
 
             if (this._myColorModel == ColorModel.RGB) {
                 color = ColorUtils.colorNormalizedToInt(color);
